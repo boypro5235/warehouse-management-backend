@@ -17,7 +17,7 @@ import java.util.List;
 public class ImportInvoice {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
-    private String invoicesId;
+    private Integer invoicesId;
 
     @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)

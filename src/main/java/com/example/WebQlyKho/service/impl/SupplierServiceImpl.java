@@ -40,7 +40,7 @@ public class SupplierServiceImpl implements SupplierService {
                 public Predicate toPredicate(Root<Supplier> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                     List<Predicate> predicates = new ArrayList<>();
                     // Add search by name
-                    predicates.add(criteriaBuilder.like(root.get("supplier_name"), "%" + searchText + "%"));
+                    predicates.add(criteriaBuilder.like(root.get("supplierName"), "%" + searchText + "%"));
                     return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
                 }
             };

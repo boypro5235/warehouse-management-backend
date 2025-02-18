@@ -10,16 +10,16 @@ import java.util.List;
 
 @Entity
 @Table(name = "supplier")
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Data
 public class Supplier {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "supplier_id")
     private Integer supplierId;
 
-    @Column(name="supplier_name",nullable = false, length = 255)
+    @Column(name = "supplier_name", nullable = false, length = 255)
     private String supplierName;
 
     private Integer contactInfo;

@@ -14,7 +14,7 @@ public class ImportDetail {
     @Id
     @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
     @Column(name = "import_details_id")
-    private String importDetailsId;
+    private Integer importDetailsId;
 
     @ManyToOne
     @JoinColumn(name = "invoices_id", nullable = false)
