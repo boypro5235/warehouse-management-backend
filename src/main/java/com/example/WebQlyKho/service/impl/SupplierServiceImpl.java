@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,6 +78,7 @@ public class SupplierServiceImpl implements SupplierService {
             Supplier supplier = supplierRepository.findById(supplierId).orElseThrow(() -> new SupplierNotFoundException("Supplier not found for id: " + supplierId));
             supplier.setSupplierName(createSupplierDto.getSupplierName());
             supplier.setContactInfo(createSupplierDto.getContactInfo());
+            supplier.setUpdatedAt(LocalDateTime.now());
             return supplierRepository.save(supplier);
         } catch (Exception e) {
             log.error("Error updating supplier", e);
