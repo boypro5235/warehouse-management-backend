@@ -10,5 +10,5 @@ public class CreateSupplierDto {
     @NotNull(message = "Supplier name is required")
     private String supplierName;
     @NotNull(message = "Contact info is required")
-    private Integer contactInfo;
+    private String contactInfo;
 }

@@ -1,11 +1,14 @@
 package com.example.WebQlyKho.controller;
 
+import com.example.WebQlyKho.dto.request.CreateCategoryDto;
 import com.example.WebQlyKho.dto.request.CreateSupplierDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
+import com.example.WebQlyKho.entity.Category;
 import com.example.WebQlyKho.entity.Supplier;
+import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.exception.SupplierNotFoundException;
-import com.example.WebQlyKho.service.SupplierService;
+import com.example.WebQlyKho.service.CategoryService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,14 +21,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/suppliers")
+@RequestMapping("api/categories")
 @Slf4j
-public class SupplierController {
+public class CategoryController {
     @Autowired
-    private SupplierService supplierService;
+    private CategoryService categoryService;
 
     @PostMapping
-    public ResponseEntity<Object> createSupplier(@RequestBody @Valid CreateSupplierDto createSupplierDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createCategory(@RequestBody @Valid CreateCategoryDto createCategoryDto, BindingResult bindingResult) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -40,10 +43,10 @@ public class SupplierController {
                         HttpStatus.BAD_REQUEST
                 );
             }
-            Supplier supplier = supplierService.createSupplier(createSupplierDto);
-            return APIResponse.responseBuilder(supplier, "Supplier created successfully", HttpStatus.OK);
+            Category category = categoryService.createCategory(createCategoryDto);
+            return APIResponse.responseBuilder(category, "Category created successfully", HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error creating suppliers", e);
+            log.error("Error creating categories", e);
             return APIResponse.responseBuilder(
                     null,
                     "An unexpected error occurred",
@@ -53,37 +56,37 @@ public class SupplierController {
     }
 
     @GetMapping()
-    public ResponseEntity<Object> searchSuppliers(@RequestParam(defaultValue = "")  String searchText,
-                                                    @RequestParam(defaultValue = "1") Integer pageNo,
-                                                    @RequestParam(defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<Object> searchCategories(@RequestParam(defaultValue = "")  String searchText,
+                                                  @RequestParam(defaultValue = "1") Integer pageNo,
+                                                  @RequestParam(defaultValue = "10") Integer pageSize) {
         try {
             if(pageNo<=0&&pageSize<=0) {
                 pageNo = 1;
                 pageSize = 1;
             }
-            Map<String, Object> mapSupplier = supplierService.searchSuppliers(searchText, pageNo, pageSize);
-            return APIResponse.responseBuilder(mapSupplier, null, HttpStatus.OK);
+            Map<String, Object> mapCategory = categoryService.searchCategories(searchText, pageNo, pageSize);
+            return APIResponse.responseBuilder(mapCategory, null, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error getting suppliers", e);
-            return APIResponse.responseBuilder(null,"Error occurred while getting suppliers", HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Error getting categories", e);
+            return APIResponse.responseBuilder(null,"Error occurred while getting categories", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/{supplierId}")
-    public ResponseEntity<Object> getSupplierById(@PathVariable Integer supplierId) {
+    @GetMapping("/{categoryId}")
+    public ResponseEntity<Object> getCategoryById(@PathVariable Integer categoryId) {
         try {
-            Supplier supplier = supplierService.getSupplierById(supplierId);
-            return APIResponse.responseBuilder(supplier, "Supplier with id="+supplierId+" return successfully", HttpStatus.OK);
-        } catch (SupplierNotFoundException e) {
+            Category category = categoryService.getCategoryById(categoryId);
+            return APIResponse.responseBuilder(category, "Category with id= "+categoryId+" return successfully", HttpStatus.OK);
+        } catch (CategoryNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Error getting supplier", e);
-            return APIResponse.responseBuilder(null, "Error occurred while getting supplier", HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Error getting category", e);
+            return APIResponse.responseBuilder(null, "Error occurred while getting category", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("/{supplierId}")
-    public ResponseEntity<Object> updateSupplier(@PathVariable Integer supplierId, @RequestBody @Valid CreateSupplierDto createSupplierDto, BindingResult bindingResult) {
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<Object> updateCategory(@PathVariable Integer categoryId, @RequestBody @Valid CreateCategoryDto createCategoryDto, BindingResult bindingResult) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -98,30 +101,30 @@ public class SupplierController {
                         HttpStatus.BAD_REQUEST
                 );
             }
-            Supplier supplier = supplierService.updateSupplier(supplierId, createSupplierDto);
-            return APIResponse.responseBuilder(supplier, "Supplier updated successfully", HttpStatus.OK);
-        } catch (SupplierNotFoundException e) {
+            Category category = categoryService.updateCategory(categoryId, createCategoryDto);
+            return APIResponse.responseBuilder(category, "Category updated successfully", HttpStatus.OK);
+        } catch (CategoryNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Error updating supplier", e);
+            log.error("Error updating category", e);
             return APIResponse.responseBuilder(null, "An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping()
-    public ResponseEntity<Object> deleteSuppliers(@RequestBody DeleteRequest request) {
+    public ResponseEntity<Object> deleteCategories(@RequestBody DeleteRequest request) {
         try {
             if (request.getIds() == null || request.getIds().isEmpty()) {
                 return APIResponse.responseBuilder(null, "The data sent is not in the correct format.", HttpStatus.BAD_REQUEST);
             }
 
-            supplierService.deleteSuppliersByIds(request.getIds());
+            categoryService.deleteCategoriesByIds(request.getIds());
             return APIResponse.responseBuilder(
                     null,
-                    "Suppliers deleted successfully",
+                    "Categories deleted successfully",
                     HttpStatus.OK
             );
-        } catch (SupplierNotFoundException e) {
+        } catch (CategoryNotFoundException e) {
             return APIResponse.responseBuilder(
                     null,
                     e.getMessage(),
@@ -131,7 +134,7 @@ public class SupplierController {
             log.error("Unexpected error during deleting update", e);
             return APIResponse.responseBuilder(
                     null,
-                    "An unexpected error occurred while deleting the suppliers",
+                    "An unexpected error occurred while deleting the categories",
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }
