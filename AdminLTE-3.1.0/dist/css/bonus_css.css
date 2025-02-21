@@ -1,0 +1,1171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #EDF0F2;
+    font-family: 'Poppins', sans-serif;
+}
+
+li {
+    list-style: none;
+}
+
+.container-sc {
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+
+}
+
+/* Thiết lập var font-weight */
+:root {
+    --font-light: 300;
+    --font-normal: 400;
+    --font-bold: 700;
+}
+
+.container {
+    max-width: 1920px;
+    margin: 0 auto;
+}
+
+a {
+    text-decoration: none;
+}
+
+.header {
+    background-color: #fff;
+}
+
+.header-mn {
+    display: flex;
+    padding: 20px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.menu-rt {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.rt-account {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.rt-desc {
+    display: flex;
+    gap: 10px;
+}
+
+.menubar-ic i {
+    font-size: 30px;
+    color: #000;
+}
+
+.menubar-ic {
+    cursor: pointer;
+    font-size: 24px;
+    /* padding: 10px; */
+}
+
+.rt-glass {
+    width: 34px;
+    height: 34px;
+    border-radius: 5px;
+    padding: 5px;
+    background-color: #EAEAEA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+.slidebar-sc {
+    background-color: #101540;
+    flex: 1 1 10%;
+    max-width: 10%;
+    height: 100vh;
+    padding: 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+    /* Hiển thị sidebar mặc định */
+    transition: left 0.3s ease;
+    /* Hiệu ứng trượt mượt */
+    z-index: 1000;
+}
+
+/* Khi sidebar ẩn */
+.slidebar-sc.hidden {
+    left: -250px;
+    /* Ẩn sidebar */
+    display: none;
+}
+
+.sc-main {
+    flex: 1 1 90%;
+    max-width: 90%;
+}
+
+.slidebar-sc ul li {
+    list-style: none;
+}
+
+.sc-managemet {
+    display: flex;
+    width: 100%;
+}
+
+.slidebar-sc ul li a {
+    display: flex;
+
+    justify-content: flex-start;
+    align-items: center;
+    font-size: 16px;
+    color: #fff;
+    gap: 20px;
+    padding-bottom: 20px;
+}
+
+.slidebar-sc ul li a h1 {
+    font-size: 16px;
+    color: #fff;
+}
+
+.slidebar-sc ul li a:hover {
+    color: #c30000;
+}
+
+.slidebar-sc ul li a h1:hover {
+    color: #c30000;
+}
+
+
+.dropdown-menu {
+
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    box-shadow: 0px 8px 16px 0px rgb(0 0 0 / 90%);
+    z-index: 1;
+    top: 50%;
+    left: -50%;
+    transform: translate(-85%, 37%);
+    width: 170px;
+}
+
+.dropdown-menu li {
+    padding: 10px;
+}
+
+.dropdown-menu li a {
+    text-decoration: none;
+    color: black;
+}
+
+.dropdown-menu li:hover {
+    background-color: #ddd;
+}
+
+.drop-account {
+    position: relative;
+    cursor: pointer;
+}
+
+
+
+.top-cards {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
+}
+
+.card-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.card-details {
+    text-align: left;
+}
+
+.card h3 {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.card:nth-child(1) h3 {
+    color: #7C3AED;
+}
+
+.card:nth-child(2) h3 {
+    color: #3B82F6;
+}
+
+.card:nth-child(3) h3 {
+    color: #F59E0B;
+}
+
+.card:nth-child(4) h3 {
+    color: #10B981;
+}
+
+.card p {
+    font-size: 16px;
+    color: #777;
+}
+
+.card-percentage {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.card-percentage span {
+    margin-left: 5px;
+}
+
+.card:nth-child(1) .card-icon {
+    color: #7C3AED;
+}
+
+.card:nth-child(2) .card-icon {
+    color: #3B82F6;
+}
+
+.card:nth-child(3) .card-icon {
+    color: #F59E0B;
+}
+
+.card:nth-child(4) .card-icon {
+    color: #10B981;
+}
+
+.card:nth-child(1) .card-percentage span {
+    color: #10B981;
+}
+
+.card:nth-child(2) .card-percentage span {
+    color: #EF4444;
+}
+
+.card:nth-child(3) .card-percentage span {
+    color: #10B981;
+}
+
+.card:nth-child(4) .card-percentage span {
+    color: #10B981;
+}
+
+.charts {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.chart {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+    flex: 1;
+}
+
+.chart h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+.chart-content {
+    height: 300px;
+    align-items: center;
+    text-align: center;
+}
+
+.bar-chart {
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+    height: 100%;
+}
+
+.pie-chart {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.tables {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px;
+}
+
+.table-container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin: 0 10px;
+}
+
+.table-container:first-child {
+    flex-basis: 60%;
+}
+
+.table-container:last-child {
+    flex-basis: 40%;
+}
+
+.table-container h3 {
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #333;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+thead th,
+tbody td {
+    padding: 10px;
+    border: 1px solid #ddd;
+}
+
+thead th {
+    background-color: #f4f4f9;
+    color: #333;
+    text-align: left;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+tbody tr:nth-child(odd) {
+    background-color: #f9f9f9;
+}
+
+.box-orders {
+    background: #fff;
+
+    margin: 20px;
+    border-bottom: 1px solid #DEE1FF;
+}
+
+.box-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px;
+    border-bottom: 1px solid #DEE1FF;
+}
+
+button.btn-expect {
+    font-size: 24px;
+    background: #fff;
+    border: 1px solid #7400B8;
+    color: #6930C3;
+    font-weight: 400;
+    line-height: 36px;
+    text-align: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi tất cả các thuộc tính với thời gian 0.3s */
+}
+.btn-expect:hover {
+    color: #fff;
+    background-color: #7400B8; /* Màu nền thay đổi khi hover */
+    transform: scale(1.1); /* Phóng to nút */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ mượt mà */
+}
+.box-title-lt h1 {
+    font-size: 32px;
+    line-height: 48px;
+    font-weight: 500;
+    color: #101540;
+}
+
+button.btn-addorder {
+    background: #7400B8;
+    border-radius: 5px;
+    padding: 10px 15px;
+    color: #fff;
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 400;
+    text-align: center;
+    border: 1px solid #6930C3;
+    cursor: pointer;
+    transition: all 0.3s ease; /* Hiệu ứng chuyển đổi tất cả các thuộc tính với thời gian 0.3s */
+}
+
+/* Hiệu ứng khi hover vào nút */
+.btn-addorder:hover {
+    background-color: #7400B8; /* Màu nền thay đổi khi hover */
+    transform: scale(1.1); /* Phóng to nút */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Thêm bóng đổ mượt mà */
+}
+
+
+.box-btnorder {
+    display: flex;
+    gap: 20px;
+}
+
+.box-search {
+    display: flex;
+    justify-content: space-between;
+}
+
+.box-filter {
+    display: flex;
+    gap: 20px;
+}
+
+.box-content {
+    padding: 35px;
+}
+
+.box-filter-name .store-box,
+.box-filter-status .status-box,
+.box-filter-btn .filter-box {
+    /* padding: 10px; */
+    border-radius: 5px;
+    border: 1px solid #D9D9D9;
+    color: #101540;
+    font-size: 24px;
+    line-height: 36px;
+    font-weight: 400;
+}
+
+.box-filter-date input {
+    width: 100%;
+    height: 100%;
+    padding: 0 10px;
+
+}
+
+
+.store-box,
+.status-box,
+.filter-box {
+    position: relative;
+    display: inline-block;
+
+}
+
+.store-btn,
+.status-btn,
+.filter-btn {
+    padding: 5px 10px;
+
+
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.box-filter-name ul,
+.box-filter-status ul,
+.box-filter-btn ul {
+    display: none;
+    position: absolute;
+    background: white;
+    border: 1px solid #ccc;
+    list-style: none;
+    padding: 10px;
+    margin: 0;
+    width: 100%;
+}
+
+.box-filter-name ul li,
+.box-filter-status ul li,
+.box-filter-btn ul li {
+    padding: 8px;
+    cursor: pointer;
+}
+
+.box-filter-name ul li:hover,
+.box-filter-status ul li:hover,
+.box-filter-btn ul li:hover {
+    background: #f0f0f0;
+}
+
+.search-ct {
+    position: relative;
+    width: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.search-ct i {
+    position: absolute;
+    left: 10px;
+    /* Đặt icon về bên trái */
+    top: 50%;
+    transform: translateY(-50%);
+    color: gray;
+    cursor: pointer;
+    font-size: 24px;
+    color: #101540;
+}
+
+.search-ct input {
+    width: 100%;
+    padding: 10px 10px 10px 45px;
+    /* Chừa khoảng trống bên trái để icon */
+    border: 1px solid #D9D9D9;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    font-weight: var(--font-normal);
+    line-height: 24px;
+    color:#333;;
+}
+
+
+
+
+
+
+
+.box-tb table thead tr th {
+    background-color: #fff;
+    text-align: center;
+}
+
+.box-tb table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+.box-tb table,
+th,
+td {
+
+    border: none !important;
+}
+
+.box-tb table thead tr {
+    border-bottom: 1px solid #333;
+}
+
+.box-tb table tbody tr {
+    border-bottom: 1px solid #333;
+}
+
+.box-tb table thead tr input {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    border: 1px solid #8F8F8F;
+}
+
+.box-tb table tbody tr input {
+    width: 24px;
+    height: 24px;
+    border-radius: 5px;
+    border: 1px solid #8F8F8F;
+}
+
+.box-tb th,
+td {
+
+    text-align: left;
+}
+
+.box-tb tbody td {
+    background-color: #fff;
+    text-align: center;
+}
+
+.status-completed p {
+    color: #333;
+    background-color: #52B788 !important;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.status-pending p {
+    color: #333;
+    background-color: #BCE784 !important;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.status-cancelled p {
+    color: #333;
+    background-color: #FF0000 !important;
+    padding: 10px;
+    border-radius: 30px;
+}
+
+.box-tb tbody td {
+    padding: 25px;
+
+}
+
+
+
+
+
+/* The Modal (background) */
+.modal.addOrder {
+    display: none;
+    /* Hidden by default */
+    position: fixed;
+    /* Stay in place */
+    z-index: 1;
+    /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%;
+    /* Full width */
+    height: 100%;
+    /* Full height */
+    overflow: auto;
+    /* Enable scroll if needed */
+    background-color: rgb(0, 0, 0);
+    /* Fallback color */
+    background-color: rgba(0, 0, 0, 0.4);
+    /* Black w/ opacity */
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button */
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.menubar-mb{
+    display: none;
+}
+
+
+
+@media screen and (max-width: 576px) {
+    .mb-box {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        height: 100vh;
+        width: 100%;
+        z-index: 2;
+        top: 60px;
+        border-top: 1px solid #333;
+        left: 0;
+    }
+    .mb-box ul li{
+        border-bottom: 1px solid #333;
+        padding-bottom: 10px;
+        padding-top: 10px;
+        padding-left: 15px;
+        
+    }
+    .mb-box ul li a{
+        color: #333;
+    }
+    /* Khi cuộn xuống, thêm lớp shadow để tạo hiệu ứng nổi */
+    .header.scrolled {
+        background: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: white;
+        transition: background 0.3s, box-shadow 0.3s;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+    }
+    .box-tb table, thead, tbody, th, td, tr {
+        display: block;
+        width: 100%;
+    }
+    
+    .box-tb thead {
+        display: none; /* Ẩn tiêu đề cột trên màn hình nhỏ */
+    }
+
+    .box-tb tr {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+
+    .box-tb td {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+    }
+
+    .box-tb td::before {
+        /* content: attr(data-label); */
+        font-weight: bold;
+    }
+
+    .search-ct{
+        width: 100%;
+    }
+    .menubar-ic{
+        display: none;
+    }
+    .menubar-mb{
+        display: block;
+    }
+    .header-mn {
+        padding: 15px;
+    }
+
+    .menubar-ic i {
+        font-size: 24px;
+    }
+
+    .slidebar-sc {
+        display: none;
+    }
+
+    .sc-main {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+
+    .top-cards {
+        flex-direction: column;
+    }
+
+    .card {
+        margin: 10px 0;
+    }
+
+    .charts {
+        flex-direction: column;
+    }
+
+    .chart {
+        margin: 10px 0;
+    }
+
+    .tables {
+        flex-direction: column;
+    }
+
+    .table-container {
+        margin: 10px 0;
+    }
+
+    .box-orders {
+        margin: 10px 0;
+    }
+
+    .box-title {
+        display: flex;
+        padding: 15px;
+        flex-direction: column;
+        align-items: normal;
+    }
+
+    .box-title-lt h1 {
+        font-size: 16px;
+    }
+
+    .box-content {
+        padding: 20px;
+    }
+
+    .box-filter {
+        flex-direction: column;
+        padding-top: 20px;
+    }
+    .search-ct i{
+        font-size: 16px;
+    }
+    .box-filter-name ul li, .box-filter-status ul li, .box-filter-btn ul li {
+        padding: 0px;
+        font-size: 16px;
+    }
+    .box-filter-name,
+    .box-filter-status,
+    .box-filter-btn {
+        width: 100%;
+    }
+
+    .box-filter-name ul,
+    .box-filter-status ul,
+    .box-filter-btn ul {
+        width: 100%;
+        z-index: 2;
+    }
+
+    .box-filter-date input {
+        width: 100%;
+    }
+
+    .box-search {
+        flex-direction: column;
+    }
+
+    .box-search input {
+        width: 100%;
+        font-size: 16px;
+    }
+
+    .box-btnorder {
+        flex-direction: column;
+    }
+
+    .box-btnorder button {
+        padding: 0;
+        font-size: 16px;
+        width: 100%;
+    }
+    .box-filter-name .store-box, .box-filter-status .status-box, .box-filter-btn .filter-box {
+        width: 100%;
+    }
+    .store-btn, .status-btn, .filter-btn {
+        padding: 5px 10px;
+        cursor: pointer;
+        border-radius: 5px;
+        display: flex
+    ;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 16px;
+    }
+    .box-tb table thead tr th {
+        text-align: center;
+    }
+
+    .box-tb table tbody tr td {
+        text-align: center;
+        padding: 0 0 15px 0;
+    }
+    td.status-completed p{
+        width: 100%;
+    }
+    td.status-pending p{
+        width: 100%;
+    }
+    td.status-cancelled p{
+        width: 100%;
+    }
+    .box-tb table thead tr input {
+        width: 24px;
+        height: 24px;
+        border-radius: 5px;
+        border: 1px solid #8F8F8F;
+    }
+
+    .box-tb table tbody tr input {
+        width: 24px;
+        height: 24px;
+        border-radius: 5px;
+        border: 1px solid #8F8F8F
+    }
+    button.btn-expect, button.btn-addorder{
+        width: 100%;
+    }
+
+}
+
+/* =============================================
+   Responsive cho màn hình Tablet (577px - 991px)
+   ============================================= */
+@media screen and (min-width: 577px) and (max-width: 991px) {
+    /* Điều chỉnh container chung */
+    .container-sc, .container {
+        padding: 0 15px;
+    }
+    
+    /* Sidebar và nội dung chính */
+    .slidebar-sc {
+        max-width: 20%;
+        padding: 15px;
+    }
+    .sc-main {
+        max-width: 80%;
+    }
+    
+    /* Header: giảm padding một chút */
+    .header-mn {
+        padding: 15px 20px;
+    }
+    
+    /* Thanh tìm kiếm */
+    .search-ct {
+        width: 100%;
+    }
+    .search-ct input,
+    .search-ct i {
+        font-size: 16px;
+    }
+    
+    /* Các thẻ card (top-cards) - hiển thị theo 2 cột */
+    .top-cards {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .top-cards .card {
+        flex: 1 1 calc(50% - 10px);
+        margin: 10px 0;
+    }
+    
+    /* Các biểu đồ (charts) - hiển thị theo 2 cột */
+    .charts {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .charts .chart {
+        flex: 1 1 calc(50% - 10px);
+        margin: 10px 0;
+    }
+    
+    /* Các bảng (tables) - xếp chồng toàn bộ chiều rộng */
+    .tables {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+    .tables .table-container {
+        flex-basis: 100%;
+        margin: 10px 0;
+    }
+    
+    /* Điều chỉnh riêng cho phần Đơn đặt hàng */
+    .box-orders .box-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+}
+
+/* =============================================
+   Responsive cho màn hình Mobile (dưới 576px)
+   ============================================= */
+@media screen and (max-width: 576px) {
+    /* Ẩn sidebar, ẩn menu icon desktop; hiển thị menu mobile */
+    .slidebar-sc {
+        display: none;
+    }
+    .menubar-ic {
+        display: none;
+    }
+    .menubar-mb {
+        display: block;
+    }
+    
+    /* Header: sắp xếp theo cột để vừa khít */
+    .header-mn {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 10px;
+    }
+    
+    /* Thanh tìm kiếm: chiếm toàn bộ chiều rộng */
+    .search-ct {
+        width: 100%;
+    }
+    .search-ct input,
+    .search-ct i {
+        font-size: 16px;
+    }
+    
+    /* Các thẻ card: xếp thành cột */
+    .top-cards {
+        flex-direction: column;
+    }
+    .top-cards .card {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    /* Biểu đồ: xếp chồng theo cột */
+    .charts {
+        flex-direction: column;
+    }
+    .charts .chart {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    /* Các bảng: xếp theo cột */
+    .tables {
+        flex-direction: column;
+    }
+    .table-container {
+        width: 100%;
+        margin: 10px 0;
+    }
+    
+    /* Responsive cho bảng trong trang Đơn đặt hàng */
+    .box-tb table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+        display: block;
+        width: 100%;
+    }
+    .box-tb thead {
+        display: none; /* Ẩn tiêu đề cột */
+    }
+    .box-tb tr {
+        margin-bottom: 10px;
+        border: 1px solid #ddd;
+        padding: 10px;
+    }
+    .box-tb td {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px;
+        border-bottom: 1px solid #ddd;
+    }
+    .box-tb td::before {
+        /* Nếu muốn hiển thị nhãn cho từng ô, hãy dùng thuộc tính data-label trong HTML */
+        font-weight: bold;
+    }
+    
+    /* Điều chỉnh riêng cho trang Đơn đặt hàng */
+    .box-orders .box-title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .box-orders .box-btnorder {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+    }
+    .box-orders .box-search {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .box-orders .box-filter {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    /* Điều chỉnh Modal (Thêm đơn hàng) */
+    .modal-content {
+        width: 95%;
+    }
+    
+    /* Đảm bảo các dropdown filter chiếm toàn bộ chiều rộng */
+    .box-filter-name,
+    .box-filter-status,
+    .box-filter-btn {
+        width: 100%;
+    }
+    .store-btn,
+    .status-btn,
+    .filter-btn {
+        font-size: 16px;
+    }
+    .btn-expect{
+        width: 100% !important;
+    }
+}
+
+/* =============================================
+   Điều chỉnh chung cho màn hình nhỏ (dưới 768px)
+   ============================================= */
+@media screen and (max-width: 768px) {
+    /* Giảm kích thước tiêu đề, font và padding cho các thành phần chung */
+    .box-title-lt h1 {
+        font-size: 24px;
+        line-height: 32px;
+    }
+        .card h3 {
+        font-size: 20px;
+    }
+    .card p {
+        font-size: 14px;
+    }
+    .chart h3,
+    .table-container h3 {
+        font-size: 16px;
+    }
+    .btn-addorder,
+    .btn-expect {
+        font-size: 18px;
+        line-height: 28px;
+        padding: 8px 12px;
+    }
+    
+    /* Nếu trong file login hoặc form khác có các thành phần riêng, bổ sung thêm nếu cần */
+    .login-form,
+    .form-container {
+        padding: 15px;
+    }
+    .login-form input,
+    .form-container input {
+        font-size: 16px;
+    }
+}
