@@ -21,7 +21,7 @@ public class ImportDetail {
     private ImportInvoice importInvoice;
 
     @Column(nullable = false)
-    private String productId;
+    private Integer productId;
 
     @Column(nullable = false)
     private Integer quantity;
