@@ -22,7 +22,7 @@ public class Supplier {
     @Column(name = "supplier_name", nullable = false, length = 255)
     private String supplierName;
 
-    private Integer contactInfo;
+    private String contactInfo;
 
     private Boolean status = true;
 
