@@ -37,6 +37,15 @@ public class ImportInvoice {
 
     private LocalDateTime updatedAt = LocalDateTime.now();
 
+    @Column(name = "vat")
+    private float vat;
+
+    @Column(name = "discount")
+    private float discount;
+
+    @Column(name = "final_amount")
+    private double finalAmount;
+
     @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ImportDetail> importDetails;
 }
