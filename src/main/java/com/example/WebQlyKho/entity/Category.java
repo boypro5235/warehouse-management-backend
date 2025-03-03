@@ -22,6 +22,9 @@ public class Category {
     @Column(name = "category_name")
     private String categoryName;
 
+    @Column(name = "description")
+    private String description;
+
     @Column(name="status")
     private boolean status;
 

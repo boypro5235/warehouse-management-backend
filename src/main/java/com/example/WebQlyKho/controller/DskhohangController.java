@@ -1,16 +1,20 @@
 package com.example.WebQlyKho.controller;
 
 import com.example.WebQlyKho.dto.request.CreateCategoryDto;
+import com.example.WebQlyKho.dto.request.CreateDskhohangDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
 import com.example.WebQlyKho.entity.Category;
+import com.example.WebQlyKho.entity.Dskhohang;
 import com.example.WebQlyKho.exception.CategoryNotFoundException;
-import com.example.WebQlyKho.service.CategoryService;
+import com.example.WebQlyKho.service.DskhohangService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,14 +22,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/categories")
+@RequestMapping("api/dskhohangs")
 @Slf4j
-public class CategoryController {
+public class DskhohangController {
     @Autowired
-    private CategoryService categoryService;
+    private DskhohangService dskhohangService;
 
     @PostMapping
-    public ResponseEntity<Object> createCategory(@RequestBody @Valid CreateCategoryDto createCategoryDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createDskhohang(@RequestBody @Valid CreateDskhohangDto createDskhohangDto, BindingResult bindingResult) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -40,10 +44,10 @@ public class CategoryController {
                         HttpStatus.BAD_REQUEST
                 );
             }
-            Category category = categoryService.createCategory(createCategoryDto);
-            return APIResponse.responseBuilder(category, "Category created successfully", HttpStatus.OK);
+            Dskhohang dskhohang = dskhohangService.createDskhohang(createDskhohangDto);
+            return APIResponse.responseBuilder(dskhohang, "Khohang created successfully", HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error creating categories", e);
+            log.error("Error creating khohang", e);
             return APIResponse.responseBuilder(
                     null,
                     "An unexpected error occurred",
@@ -53,37 +57,37 @@ public class CategoryController {
     }
 
     @GetMapping()
-    public ResponseEntity<Object> searchCategories(@RequestParam(defaultValue = "")  String searchText,
-                                                  @RequestParam(defaultValue = "1") Integer pageNo,
-                                                  @RequestParam(defaultValue = "10") Integer pageSize) {
+    public ResponseEntity<Object> searchDskhohangs(@RequestParam(defaultValue = "")  String searchText,
+                                                   @RequestParam(defaultValue = "1") Integer pageNo,
+                                                   @RequestParam(defaultValue = "10") Integer pageSize) {
         try {
             if(pageNo<=0&&pageSize<=0) {
                 pageNo = 1;
                 pageSize = 1;
             }
-            Map<String, Object> mapCategory = categoryService.searchCategories(searchText, pageNo, pageSize);
-            return APIResponse.responseBuilder(mapCategory, null, HttpStatus.OK);
+            Map<String, Object> mapDskhohang = dskhohangService.searchDskhohangs(searchText, pageNo, pageSize);
+            return APIResponse.responseBuilder(mapDskhohang, null, HttpStatus.OK);
         } catch (Exception e) {
-            log.error("Error getting categories", e);
-            return APIResponse.responseBuilder(null,"Error occurred while getting categories", HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Error getting khohangs", e);
+            return APIResponse.responseBuilder(null,"Error occurred while getting khohangs", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @GetMapping("/{categoryId}")
-    public ResponseEntity<Object> getCategoryById(@PathVariable Integer categoryId) {
+    @GetMapping("/{khohangId}")
+    public ResponseEntity<Object> getKhohangbyId(@PathVariable Integer khohangId) {
         try {
-            Category category = categoryService.getCategoryById(categoryId);
-            return APIResponse.responseBuilder(category, "Category with id= "+categoryId+" return successfully", HttpStatus.OK);
-        } catch (CategoryNotFoundException e) {
+            Dskhohang dskhohang = dskhohangService.getDskhohangById(khohangId);
+            return APIResponse.responseBuilder(dskhohang, "Khohang with id= "+khohangId+" return successfully", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Error getting category", e);
-            return APIResponse.responseBuilder(null, "Error occurred while getting category", HttpStatus.INTERNAL_SERVER_ERROR);
+            log.error("Error getting khohang", e);
+            return APIResponse.responseBuilder(null, "Error occurred while getting khohang", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
-    @PutMapping("/{categoryId}")
-    public ResponseEntity<Object> updateCategory(@PathVariable Integer categoryId, @RequestBody @Valid CreateCategoryDto createCategoryDto, BindingResult bindingResult) {
+    @PutMapping("/{khohangId}")
+    public ResponseEntity<Object> updateKhohang(@PathVariable Integer khohangId, @RequestBody @Valid CreateDskhohangDto createDskhohangDto, BindingResult bindingResult) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -98,30 +102,30 @@ public class CategoryController {
                         HttpStatus.BAD_REQUEST
                 );
             }
-            Category category = categoryService.updateCategory(categoryId, createCategoryDto);
-            return APIResponse.responseBuilder(category, "Category updated successfully", HttpStatus.OK);
-        } catch (CategoryNotFoundException e) {
+            Dskhohang dskhohang = dskhohangService.updateDskhohang(khohangId, createDskhohangDto);
+            return APIResponse.responseBuilder(dskhohang, "Khohang updated successfully", HttpStatus.OK);
+        } catch (EntityNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);
         } catch (Exception e) {
-            log.error("Error updating category", e);
+            log.error("Error updating khohang", e);
             return APIResponse.responseBuilder(null, "An unexpected error occurred", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @DeleteMapping()
-    public ResponseEntity<Object> deleteCategories(@RequestBody DeleteRequest request) {
+    public ResponseEntity<Object> deleteKhohangs(@RequestBody DeleteRequest request) {
         try {
             if (request.getIds() == null || request.getIds().isEmpty()) {
                 return APIResponse.responseBuilder(null, "The data sent is not in the correct format.", HttpStatus.BAD_REQUEST);
             }
 
-            categoryService.deleteCategoriesByIds(request.getIds());
+            dskhohangService.deleteDskhohangsByIds(request.getIds());
             return APIResponse.responseBuilder(
                     null,
-                    "Categories deleted successfully",
+                    "Khohangs deleted successfully",
                     HttpStatus.OK
             );
-        } catch (CategoryNotFoundException e) {
+        } catch (EntityNotFoundException e) {
             return APIResponse.responseBuilder(
                     null,
                     e.getMessage(),
@@ -131,7 +135,7 @@ public class CategoryController {
             log.error("Unexpected error during deleting update", e);
             return APIResponse.responseBuilder(
                     null,
-                    "An unexpected error occurred while deleting the categories",
+                    "An unexpected error occurred while deleting the khohangs",
                     HttpStatus.INTERNAL_SERVER_ERROR
             );
         }

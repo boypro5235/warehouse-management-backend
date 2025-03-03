@@ -9,4 +9,6 @@ public class CreateCategoryDto {
     @NotNull(message = "Category name is required")
     @NotBlank(message = "Category name is required")
     private String categoryName;
+
+    private String description;
 }
