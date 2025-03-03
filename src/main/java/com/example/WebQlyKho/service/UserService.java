@@ -5,5 +5,5 @@ import com.example.WebQlyKho.dto.request.RegisterRequestDto;
 
 public interface UserService {
     String Login(LoginRequestDto request);
-    void register(RegisterRequestDto request);
+    int register(RegisterRequestDto request);
 }
