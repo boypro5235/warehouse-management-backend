@@ -1,12 +1,9 @@
 package com.example.WebQlyKho.controller;
 
-import com.example.WebQlyKho.dto.request.CreateCategoryDto;
 import com.example.WebQlyKho.dto.request.CreateDskhohangDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
-import com.example.WebQlyKho.entity.Category;
 import com.example.WebQlyKho.entity.Dskhohang;
-import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.service.DskhohangService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -14,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
