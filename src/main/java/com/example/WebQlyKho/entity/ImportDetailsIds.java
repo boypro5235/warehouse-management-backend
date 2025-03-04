@@ -4,30 +4,30 @@ import java.io.Serializable;
 import java.util.Objects;
 
 public class ImportDetailsIds implements Serializable {
-    private Integer productId;
-    private Integer invoicesId;
+    private Integer product;
+    private Integer importInvoice;
 
     public ImportDetailsIds() {}
 
     public ImportDetailsIds(Integer productId, Integer invoicesId) {
-        this.productId = productId;
-        this.invoicesId = invoicesId;
+        this.product = productId;
+        this.product = invoicesId;
     }
 
     public Integer getProductId() {
-        return productId;
+        return product;
     }
 
     public void setProductId(Integer productId) {
-        this.productId = productId;
+        this.product = productId;
     }
 
     public Integer getInvoicesId() {
-        return invoicesId;
+        return importInvoice;
     }
 
     public void setInvoicesId(Integer invoicesId) {
-        this.invoicesId = invoicesId;
+        this.importInvoice = invoicesId;
     }
 
     @Override
@@ -35,12 +35,12 @@ public class ImportDetailsIds implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         ImportDetailsIds that = (ImportDetailsIds) o;
-        return Objects.equals(productId, that.productId) &&
-                Objects.equals(invoicesId, that.invoicesId);
+        return Objects.equals(product, that.product) &&
+                Objects.equals(importInvoice, that.importInvoice);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, invoicesId);
+        return Objects.hash(product, importInvoice);
     }
 }

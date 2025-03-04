@@ -33,6 +33,15 @@ public class Order {
     @Column(name = "total_amount")
     private double totalAmount;
 
+    @Column(name = "vat")
+    private float vat;
+
+    @Column(name = "discount")
+    private float discount;
+
+    @Column(name = "final_amount")
+    private float finalAmount;
+
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 

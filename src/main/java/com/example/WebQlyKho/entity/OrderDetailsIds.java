@@ -7,30 +7,30 @@ import java.util.Objects;
 @Embeddable
 public class OrderDetailsIds implements Serializable {
 
-    private Integer productId;
-    private Integer orderId;
+    private Integer product;
+    private Integer order;
 
     public OrderDetailsIds() {}
 
     public OrderDetailsIds(Integer productsId, Integer orderId) {
-        this.productId = productsId;
-        this.orderId = orderId;
+        this.product = productsId;
+        this.order = orderId;
     }
 
     public Integer getProductsId() {
-        return productId;
+        return product;
     }
 
     public void setProductsId(Integer productsId) {
-        this.productId = productsId;
+        this.product = productsId;
     }
 
     public Integer getOrderId() {
-        return orderId;
+        return order;
     }
 
     public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+        this.order = orderId;
     }
 
     @Override
@@ -38,13 +38,13 @@ public class OrderDetailsIds implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         OrderDetailsIds that = (OrderDetailsIds) o;
-        return Objects.equals(productId, that.productId) &&
-                Objects.equals(orderId, that.orderId);
+        return Objects.equals(product, that.product) &&
+                Objects.equals(order, that.order);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productId, orderId);
+        return Objects.hash(product, order);
     }
 }
 
