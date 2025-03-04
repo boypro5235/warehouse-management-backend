@@ -3,6 +3,7 @@ package com.example.WebQlyKho.service.impl;
 import com.example.WebQlyKho.dto.request.CreateProductDto;
 import com.example.WebQlyKho.entity.Category;
 import com.example.WebQlyKho.entity.Product;
+import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.repository.CategoryRepository;
 import com.example.WebQlyKho.repository.ProductRepository;
 import com.example.WebQlyKho.service.ProductService;
@@ -80,18 +81,17 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Product createProduct(CreateProductDto createProductDto) {
-        try{
-            Product product = new Product();
-            Category category = categoryRepository.findById(Integer.valueOf(createProductDto.getCategoryId())).orElseThrow(() -> new EntityNotFoundException("Không tồn tại category với id = " + createProductDto.getCategoryId()));
-            product.setCategory(category);
-            product.setProductName(createProductDto.getProductName());
-            product.setDescription(createProductDto.getDescription());
-            product.setPrice(createProductDto.getPrice());
-            return productRepository.save(product);
-        } catch (Exception e) {
-            log.error("Error creating product", e);
-            return null;
-        }
+        Product product = new Product();
+        Category category = categoryRepository.findById(Integer.valueOf(createProductDto.getCategoryId()))
+                .orElseThrow(() -> new CategoryNotFoundException("Không tồn tại category với id = " + createProductDto.getCategoryId()));
+        product.setCategory(category);
+        product.setProductName(createProductDto.getProductName());
+        product.setDescription(createProductDto.getDescription());
+        product.setPrice(createProductDto.getPrice());
+        product.setStatus(true);
+        product.setCreatedAt(LocalDateTime.now());
+        product.setUpdatedAt(LocalDateTime.now());
+        return productRepository.save(product);
     }
 
     @Override

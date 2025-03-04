@@ -20,7 +20,7 @@ import java.util.Arrays;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
     private final String[] PUBLIC_ENDPOINT ={
-            "/api/user/**",
+            "/api/user/**", "*/**"
     };
 
     @Autowired

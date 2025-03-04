@@ -4,7 +4,9 @@ import com.example.WebQlyKho.dto.request.CreateProductDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
 import com.example.WebQlyKho.entity.Product;
+import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.service.ProductService;
+import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +46,7 @@ public class ProductController {
             }
             Product product = productService.createProduct(createProductDto);
             return APIResponse.responseBuilder(product, "Product created successfully", HttpStatus.OK);
-        } catch (EntityNotFoundException e) {
+        } catch (CategoryNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);
         }catch (Exception e) {
             log.error("Error creating product", e);
@@ -58,7 +60,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<Object> searchProducts(@RequestParam(defaultValue = "") String searchText,
-                                                 @RequestParam Integer categoryId,
+                                                 @RequestParam @Nullable Integer categoryId,
                                                  @RequestParam(defaultValue = "1") Integer pageNo,
                                                  @RequestParam(defaultValue = "10") Integer pageSize) {
         try {
