@@ -1,12 +1,9 @@
 package com.example.WebQlyKho.controller;
 
-import com.example.WebQlyKho.dto.request.CreateCategoryDto;
 import com.example.WebQlyKho.dto.request.CreateProductDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
-import com.example.WebQlyKho.entity.Category;
 import com.example.WebQlyKho.entity.Product;
-import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
@@ -19,7 +16,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
