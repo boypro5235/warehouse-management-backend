@@ -6,23 +6,25 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.io.Serializable;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "order_details")
-public class OrderDetails implements Serializable {
-
-    @EmbeddedId
-    private OrderDetailsIds id;
-
+@IdClass(OrderDetailsIds.class)
+public class OrderDetails{
     @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
+    @Id
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @ManyToOne
-    @MapsId("orderId")
-    @JoinColumn(name = "order_id", referencedColumnName = "order_id", nullable = false)
+    @Id
+    @JoinColumn(name = "order_id")
     private Order order;
 
     @Column(nullable = false)
@@ -31,45 +33,20 @@ public class OrderDetails implements Serializable {
     @Column(nullable = false)
     private float price;
 
-    // Getters and Setters
-    public OrderDetailsIds getId() {
-        return id;
-    }
+    @ManyToOne
+    @JoinColumn(name = "khohang_id", nullable = false)
+    private Dskhohang dskhohang;
 
-    public void setId(OrderDetailsIds id) {
-        this.id = id;
-    }
+    @Column(name = "subtotal")
+    private Double subtotal;
 
-    public Product getProduct() {
-        return product;
-    }
+    @Column(name = "vat")
+    private float vat;
 
-    public void setProduct(Product product) {
-        this.product = product;
-    }
+    @Column(name = "discount")
+    private float discount;
 
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public int getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public float getPrice() {
-        return price;
-    }
-
-    public void setPrice(float price) {
-        this.price = price;
-    }
+    @Column(name = "total_amount")
+    private double totalAmount;
 }
 

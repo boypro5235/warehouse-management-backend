@@ -12,17 +12,16 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class ImportDetails implements Serializable {
-    @EmbeddedId
-    private ImportDetailsIds id;
-
+@IdClass(ImportDetailsIds.class)
+public class ImportDetails {
+    @Id
     @ManyToOne
-    @JoinColumn(name = "invoices_id", nullable = false)
+    @JoinColumn(name = "invoices_id")
     private ImportInvoice importInvoice;
 
+    @Id
     @ManyToOne
-    @MapsId("productId")
-    @JoinColumn(name = "product_id", referencedColumnName = "product_id", nullable = false)
+    @JoinColumn(name = "product_id")
     private Product product;
 
     @Column(nullable = false)
