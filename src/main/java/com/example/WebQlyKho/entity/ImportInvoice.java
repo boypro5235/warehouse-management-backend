@@ -45,7 +45,4 @@ public class ImportInvoice {
 
     @Column(name = "final_amount")
     private double finalAmount;
-
-    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImportDetails> importDetails;
 }
