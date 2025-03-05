@@ -7,7 +7,6 @@ import com.example.WebQlyKho.repository.ImportDetailsRepository;
 import com.example.WebQlyKho.repository.ImportInvoiceRepository;
 import com.example.WebQlyKho.repository.ProductRepository;
 import com.example.WebQlyKho.service.ImportDetailsService;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

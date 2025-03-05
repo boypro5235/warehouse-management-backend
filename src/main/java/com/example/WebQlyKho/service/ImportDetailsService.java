@@ -5,7 +5,6 @@ import com.example.WebQlyKho.dto.request.ImportDetailRequestDto;
 import com.example.WebQlyKho.entity.ImportDetails;
 import com.example.WebQlyKho.entity.ImportDetailsIds;
 
-import java.util.List;
 import java.util.Map;
 
 public interface ImportDetailsService {

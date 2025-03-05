@@ -6,7 +6,6 @@ import com.example.WebQlyKho.entity.ImportDetails;
 import com.example.WebQlyKho.entity.ImportDetailsIds;
 import com.example.WebQlyKho.service.ImportDetailsService;
 import jakarta.annotation.Nullable;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
