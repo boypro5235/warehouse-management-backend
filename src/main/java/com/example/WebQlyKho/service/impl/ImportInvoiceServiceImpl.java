@@ -34,7 +34,7 @@ import java.util.Map;
 public class ImportInvoiceServiceImpl implements ImportInvoiceService {
     private final ImportInvoiceRepository importInvoiceRepository;
     @Autowired
-    private SupplierRepository supplierRepository;
+    private final SupplierRepository supplierRepository;
 
     @Override
     public Map<String, Object> searchImportInvoices(Integer supplierId, String importDate, String fromDate, String toDate, int page, int size) {
