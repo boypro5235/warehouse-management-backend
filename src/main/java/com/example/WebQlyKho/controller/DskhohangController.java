@@ -7,6 +7,7 @@ import com.example.WebQlyKho.entity.Dskhohang;
 import com.example.WebQlyKho.service.DskhohangService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("api/dskhohangs")
 @Slf4j
+@RequiredArgsConstructor
 public class DskhohangController {
     @Autowired
-    private DskhohangService dskhohangService;
+    private final DskhohangService dskhohangService;
 
     @PostMapping
     public ResponseEntity<Object> createDskhohang(@RequestBody @Valid CreateDskhohangDto createDskhohangDto, BindingResult bindingResult) {

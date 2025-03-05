@@ -26,7 +26,7 @@ import java.util.Map;
 @Slf4j
 public class ProductController {
     @Autowired
-    private ProductService productService;
+    private final ProductService productService;
 
     @PostMapping
     public ResponseEntity<Object> createProduct(@RequestBody @Valid CreateProductDto createProductDto, BindingResult bindingResult) {

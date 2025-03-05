@@ -11,7 +11,7 @@ public class ImportDetailsIds implements Serializable {
 
     public ImportDetailsIds(Integer productId, Integer invoicesId) {
         this.product = productId;
-        this.product = invoicesId;
+        this.importInvoice = invoicesId;
     }
 
     public Integer getProductId() {

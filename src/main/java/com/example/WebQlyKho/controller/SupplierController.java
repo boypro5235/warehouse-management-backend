@@ -7,6 +7,7 @@ import com.example.WebQlyKho.entity.Supplier;
 import com.example.WebQlyKho.exception.SupplierNotFoundException;
 import com.example.WebQlyKho.service.SupplierService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/suppliers")
+@RequiredArgsConstructor
 @Slf4j
 public class SupplierController {
     @Autowired
-    private SupplierService supplierService;
+    private final SupplierService supplierService;
 
     @PostMapping
     public ResponseEntity<Object> createSupplier(@RequestBody @Valid CreateSupplierDto createSupplierDto, BindingResult bindingResult) {
