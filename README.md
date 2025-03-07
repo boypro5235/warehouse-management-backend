@@ -61,8 +61,33 @@ http://localhost:8080/swagger-ui/index.html
 - **Inventory Management**: Kiểm soát số lượng hàng tồn kho
 - **Order Management**: Quản lý nhập/xuất hàng hóa
 - **Reporting**: Xuất báo cáo tổng hợp
-=======
-WebQuanLiKho là một hệ thống quản lý kho hàng, giúp người dùng quản lý hàng tồn kho, nhập/xuất hàng hóa, theo dõi tình trạng sản phẩm và tạo báo cáo chi tiết. Dự án bao gồm cả frontend và backend, được phát triển riêng biệt trong các nhánh khác nhau.
+
+## Cấu trúc thư mục
+```
+WebQuanLiKho/
+│── src/
+│   ├── main/
+│   │   ├── java/com/example/webquanlikho/
+│   │   │   ├── config/         # Cấu hình ứng dụng (Security, JWT,...)
+│   │   │   ├── controller/     # Các controller xử lý request
+│   │   │   ├── dto/            # Các đối tượng truyền dữ liệu
+│   │   │   ├── entity/         # Các entity tương ứng với bảng database
+│   │   │   ├── repository/     # Các repository làm việc với database
+│   │   │   ├── service/        # Các service xử lý logic nghiệp vụ
+│   │   │   ├── util/           # Các tiện ích hỗ trợ chung
+│   │   │   ├── WebQuanLiKhoApplication.java  # Entry point của ứng dụng
+│   │   ├── resources/
+│   │   │   ├── application.properties  # Cấu hình ứng dụng
+│   │   │   ├── static/       # Lưu trữ tài nguyên tĩnh
+│   │   │   ├── templates/    # Các file template (nếu sử dụng Thymeleaf)
+│   ├── test/
+│   │   ├── java/com/example/webquanlikho/
+│   │   │   ├── controller/     # Kiểm thử các controller
+│   │   │   ├── service/        # Kiểm thử các service
+│   │   │   ├── repository/     # Kiểm thử các repository
+│── pom.xml                   # Cấu hình dependencies Maven
+│── README.md                 # Tài liệu hướng dẫn
+```
 
 ## Cấu trúc repository
 - **Nhánh `Backend_main`**: Chứa mã nguồn của backend, được xây dựng bằng Spring Boot.
@@ -80,7 +105,6 @@ WebQuanLiKho là một hệ thống quản lý kho hàng, giúp người dùng q
    ```
 3. Xem hướng dẫn chi tiết trong từng nhánh để biết cách cài đặt và chạy ứng dụng.
 
-
 ## Đóng góp
 1. Fork repository
 2. Tạo branch mới (`feature/your-feature`)
@@ -89,6 +113,5 @@ WebQuanLiKho là một hệ thống quản lý kho hàng, giúp người dùng q
 5. Tạo pull request
 
 ## Liên hệ
-
 Nếu có bất kỳ thắc mắc hoặc đóng góp, vui lòng liên hệ qua email: `nguyenlong18022004@gmail.com`
 
