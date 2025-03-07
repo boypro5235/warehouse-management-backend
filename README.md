@@ -1,6 +1,7 @@
 # WebQuanLiKho
 
 ## Giới thiệu
+
 Đây là backend của dự án thiết kế website quản lý kho, được xây dựng bằng Spring Boot. Hệ thống giúp quản lý hàng tồn kho, nhập/xuất hàng hóa, theo dõi tình trạng sản phẩm và tạo báo cáo chi tiết.
 
 ## Công nghệ sử dụng
@@ -60,6 +61,25 @@ http://localhost:8080/swagger-ui/index.html
 - **Inventory Management**: Kiểm soát số lượng hàng tồn kho
 - **Order Management**: Quản lý nhập/xuất hàng hóa
 - **Reporting**: Xuất báo cáo tổng hợp
+=======
+WebQuanLiKho là một hệ thống quản lý kho hàng, giúp người dùng quản lý hàng tồn kho, nhập/xuất hàng hóa, theo dõi tình trạng sản phẩm và tạo báo cáo chi tiết. Dự án bao gồm cả frontend và backend, được phát triển riêng biệt trong các nhánh khác nhau.
+
+## Cấu trúc repository
+- **Nhánh `Backend_main`**: Chứa mã nguồn của backend, được xây dựng bằng Spring Boot.
+- **Nhánh `Frontend_main`**: Chứa mã nguồn của frontend, được phát triển bằng công nghệ web hiện đại.
+
+## Hướng dẫn sử dụng
+1. **Clone repository:**
+   ```sh
+   git clone https://github.com/boypro5235/WebQuanLiKho.git
+   ```
+2. **Chuyển sang nhánh backend hoặc frontend theo nhu cầu:**
+   ```sh
+   git checkout Backend_main  # Để làm việc với backend
+   git checkout Frontend_main  # Để làm việc với frontend
+   ```
+3. Xem hướng dẫn chi tiết trong từng nhánh để biết cách cài đặt và chạy ứng dụng.
+
 
 ## Đóng góp
 1. Fork repository
@@ -69,6 +89,6 @@ http://localhost:8080/swagger-ui/index.html
 5. Tạo pull request
 
 ## Liên hệ
-Nếu có bất kỳ thắc mắc hoặc đóng góp, vui lòng liên hệ qua email: `nguyenlong18022004@gmail.com`
 
+Nếu có bất kỳ thắc mắc hoặc đóng góp, vui lòng liên hệ qua email: `nguyenlong18022004@gmail.com`
 
