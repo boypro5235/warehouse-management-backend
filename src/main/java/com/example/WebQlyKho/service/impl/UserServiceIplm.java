@@ -57,7 +57,7 @@ public class UserServiceIplm implements UserService {
         if(!user.isStatus()){
             throw new CustomException(ERROR_CODE.INACTIVE_ACCOUNT);
         }
-        String token = jwtTokenProvider.generateTokenByUsername(request.getUsername());;
+        String token = jwtTokenProvider.generateTokenByUsername(request.getUsername(), user.getUserId());;
         return LoginResponseDto.builder()
                 .token(token)
                 .role(user.getRole())

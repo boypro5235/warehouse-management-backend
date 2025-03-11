@@ -93,9 +93,7 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
         ImportDetails importDetails = new ImportDetails();
         importDetails.setProduct(product);
         importDetails.setImportInvoice(importInvoice);
-        importDetails.setDskhohang(dskhohang);
         importDetails.setQuantity(importDetailRequestDto.getQuantity());
-        importDetails.setPrice(importDetailRequestDto.getPrice());
         importDetails.setSubtotal(importDetailRequestDto.getSubtotal());
         importDetails.setVat(importDetailRequestDto.getVat());
         importDetails.setDiscount(importDetailRequestDto.getDiscount());
@@ -120,9 +118,7 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
 
         importDetails.setProduct(product);
         importDetails.setImportInvoice(importInvoice);
-        importDetails.setDskhohang(dskhohang);
         importDetails.setQuantity(importDetailRequestDto.getQuantity());
-        importDetails.setPrice(importDetailRequestDto.getPrice());
         importDetails.setSubtotal(importDetailRequestDto.getSubtotal());
         importDetails.setVat(importDetailRequestDto.getVat());
         importDetails.setDiscount(importDetailRequestDto.getDiscount());
