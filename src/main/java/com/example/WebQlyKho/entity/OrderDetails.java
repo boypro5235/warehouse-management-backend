@@ -27,13 +27,6 @@ public class OrderDetails{
     @Column(nullable = false)
     private int quantity;
 
-    @Column(nullable = false)
-    private float price;
-
-    @ManyToOne
-    @JoinColumn(name = "khohang_id", nullable = false)
-    private Dskhohang dskhohang;
-
     @Column(name = "subtotal")
     private Double subtotal;
 

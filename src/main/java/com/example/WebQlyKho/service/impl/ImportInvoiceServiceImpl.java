@@ -4,12 +4,15 @@ import com.example.WebQlyKho.dto.request.ImportInvoiceRequestDto;
 import com.example.WebQlyKho.entity.ImportInvoice;
 import com.example.WebQlyKho.repository.ImportInvoiceRepository;
 import com.example.WebQlyKho.repository.SupplierRepository;
+import com.example.WebQlyKho.repository.UserRepository;
 import com.example.WebQlyKho.service.ImportInvoiceService;
+import com.example.WebQlyKho.utils.JwtTokenProvider;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +38,12 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
     private final ImportInvoiceRepository importInvoiceRepository;
     @Autowired
     private final SupplierRepository supplierRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Map<String, Object> searchImportInvoices(Integer supplierId, String importDate, String fromDate, String toDate, int page, int size) {
@@ -112,7 +121,7 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
     }
 
     @Override
-    public ImportInvoice createImportInvoice(ImportInvoiceRequestDto importInvoiceRequestDto) {
+    public ImportInvoice createImportInvoice(ImportInvoiceRequestDto importInvoiceRequestDto, HttpServletRequest request) {
         try {
             ImportInvoice importInvoice = new ImportInvoice();
             importInvoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + importInvoiceRequestDto.getSupplierId())));
@@ -128,6 +137,7 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
             importInvoice.setStatus(true);
             importInvoice.setCreatedAt(LocalDateTime.now());
             importInvoice.setUpdatedAt(LocalDateTime.now());
+            importInvoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(request)).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy user")));
             return importInvoiceRepository.save(importInvoice);
         } catch (Exception e) {
             log.error("Error creating import invoice", e);

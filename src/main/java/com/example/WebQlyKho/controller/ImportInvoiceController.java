@@ -7,6 +7,7 @@ import com.example.WebQlyKho.service.ImportInvoiceService;
 
 import jakarta.annotation.Nullable;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,7 +57,9 @@ public class ImportInvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createImportInvoice(@RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> createImportInvoice(@RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto,
+                                                      BindingResult bindingResult,
+                                                      HttpServletRequest request) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -71,7 +74,7 @@ public class ImportInvoiceController {
                         HttpStatus.BAD_REQUEST
                 );
             }
-            ImportInvoice importInvoice = importInvoiceService.createImportInvoice(importInvoiceRequestDto);
+            ImportInvoice importInvoice = importInvoiceService.createImportInvoice(importInvoiceRequestDto, request);
             return APIResponse.responseBuilder(importInvoice, "Import invoice created successfully", HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);
