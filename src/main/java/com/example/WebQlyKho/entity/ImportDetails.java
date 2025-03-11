@@ -1,5 +1,6 @@
 package com.example.WebQlyKho.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,6 +16,7 @@ public class ImportDetails {
     @Id
     @ManyToOne
     @JoinColumn(name = "invoices_id")
+    @JsonBackReference
     private ImportInvoice importInvoice;
 
     @Id
