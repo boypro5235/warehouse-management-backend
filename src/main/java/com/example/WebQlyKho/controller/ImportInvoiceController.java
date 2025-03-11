@@ -57,9 +57,7 @@ public class ImportInvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createImportInvoice(@RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto,
-                                                      BindingResult bindingResult,
-                                                      HttpServletRequest request) {
+    public ResponseEntity<Object> createImportInvoice(@RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto, BindingResult bindingResult, HttpServletRequest request) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {

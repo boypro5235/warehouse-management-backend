@@ -35,6 +35,24 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
+    // Get username from token
+    public Integer getUserIdFromToken(String token) {
+        return (int)Jwts.parser().setSigningKey(signalKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("user-id");
+    }
+    // Get username from token
+    public Integer getUserIdFromToken(HttpServletRequest request) {
+        if(request.getHeader("Authorization") == null || !request.getHeader("Authorization").startsWith("Bearer ")){
+            throw new RuntimeException("Token Invalid");
+        }
+        String token = request.getHeader("Authorization").substring(7);
+        return (int)Jwts.parser().setSigningKey(signalKey)
+                .parseClaimsJws(token)
+                .getBody()
+                .get("user-id");
+    }
 
     // Get username from token
     public Integer getUserIdFromToken(String token) {
