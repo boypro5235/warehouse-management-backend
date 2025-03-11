@@ -11,6 +11,6 @@ public interface ImportInvoiceService {
     Map<String, Object> searchImportInvoices(Integer supplierId, String importDate, String fromDate, String toDate, int page, int size);
     ImportInvoice getImportInvoiceById(Integer invoicesId);
     ImportInvoice createImportInvoice(ImportInvoiceRequestDto importInvoiceRequestDto, HttpServletRequest request);
-    ImportInvoice updateImportInvoice(Integer invoicesId,ImportInvoiceRequestDto importInvoiceRequestDto);
+    ImportInvoice updateImportInvoice(Integer invoicesId,ImportInvoiceRequestDto importInvoiceRequestDto,HttpServletRequest httpServletRequest);
     void deleteImportInvoice(List<Integer> ids);
 }
