@@ -2,7 +2,6 @@ package com.example.WebQlyKho.service.impl;
 
 import com.example.WebQlyKho.dto.request.CreateDskhohangDto;
 import com.example.WebQlyKho.entity.Dskhohang;
-import com.example.WebQlyKho.exception.SupplierNotFoundException;
 import com.example.WebQlyKho.repository.DskhohangRepository;
 import com.example.WebQlyKho.service.DskhohangService;
 import jakarta.persistence.EntityNotFoundException;

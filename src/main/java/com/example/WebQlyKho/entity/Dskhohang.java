@@ -6,7 +6,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity(name = "dskhohang")
 @NoArgsConstructor
@@ -35,10 +34,4 @@ public class Dskhohang {
 
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
-
-    @OneToMany(mappedBy = "dskhohang", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImportDetails> importDetails;
-
-    @OneToMany(mappedBy = "dskhohang", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderDetails> orderDetails;
 }

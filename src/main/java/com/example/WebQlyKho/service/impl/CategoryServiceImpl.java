@@ -64,6 +64,10 @@ public class CategoryServiceImpl implements CategoryService {
         try{
             Category category = new Category();
             category.setCategoryName(createCategoryDto.getCategoryName());
+            category.setDescription(createCategoryDto.getDescription());
+            category.setStatus(true);
+            category.setCreatedAt(LocalDateTime.now());
+            category.setUpdatedAt(LocalDateTime.now());
             return categoryRepository.save(category);
         } catch (Exception e) {
             log.error("Error creating category", e);
@@ -76,6 +80,7 @@ public class CategoryServiceImpl implements CategoryService {
         try {
             Category category = categoryRepository.findById(categoryId).orElseThrow(() -> new CategoryNotFoundException("Category not found for id: " + categoryId));
             category.setCategoryName(createCategoryDto.getCategoryName());
+            category.setDescription(createCategoryDto.getDescription());
             category.setUpdatedAt(LocalDateTime.now());
             return categoryRepository.save(category);
         } catch (Exception e) {

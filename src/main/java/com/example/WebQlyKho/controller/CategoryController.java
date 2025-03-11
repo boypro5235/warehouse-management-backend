@@ -7,6 +7,7 @@ import com.example.WebQlyKho.entity.Category;
 import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.service.CategoryService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,10 +20,11 @@ import java.util.Map;
 
 @RestController
 @RequestMapping("api/categories")
+@RequiredArgsConstructor
 @Slf4j
 public class CategoryController {
     @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @PostMapping
     public ResponseEntity<Object> createCategory(@RequestBody @Valid CreateCategoryDto createCategoryDto, BindingResult bindingResult) {

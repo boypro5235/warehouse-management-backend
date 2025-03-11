@@ -7,7 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "import_invoices")
@@ -45,7 +44,4 @@ public class ImportInvoice {
 
     @Column(name = "final_amount")
     private double finalAmount;
-
-    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ImportDetails> importDetails;
 }
