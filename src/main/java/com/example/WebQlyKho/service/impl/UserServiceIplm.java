@@ -44,8 +44,11 @@ public class UserServiceIplm implements UserService {
         } catch (Exception e){
             throw new RuntimeException("Incorrect username or password");
         }
-
-        String token = jwtTokenProvider.generateTokenByUsername(request.getUsername());
+        User user = userRepository.findByUsername(request.getUsername());
+        if(!user.isStatus()){
+            throw new CustomException(ERROR_CODE.INACTIVE_ACCOUNT);
+        }
+        String token = jwtTokenProvider.generateTokenByUsername(request.getUsername(), user.getUserId());
 
         return token;
     }

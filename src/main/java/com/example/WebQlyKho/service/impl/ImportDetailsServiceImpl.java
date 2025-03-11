@@ -84,18 +84,13 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
         Product product = productRepository.findById(importDetailRequestDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found for id " + importDetailRequestDto.getProductId()));
 
-        ImportInvoice importInvoice = importInvoiceRepository.findById(importDetailRequestDto.getInvoicesId())
-                .orElseThrow(() -> new RuntimeException("Import Invoice not found for id " + importDetailRequestDto.getInvoicesId()));
-
-        Dskhohang dskhohang = dskhohangRepository.findById(importDetailRequestDto.getKhohangId())
-                .orElseThrow(() -> new RuntimeException("Warehouse not found for id " + importDetailRequestDto.getKhohangId()));
+//        ImportInvoice importInvoice = importInvoiceRepository.findById(importDetailRequestDto.getInvoicesId())
+//                .orElseThrow(() -> new RuntimeException("Import Invoice not found for id " + importDetailRequestDto.getInvoicesId()));
 
         ImportDetails importDetails = new ImportDetails();
         importDetails.setProduct(product);
-        importDetails.setImportInvoice(importInvoice);
-        importDetails.setDskhohang(dskhohang);
+//        importDetails.setImportInvoice(importInvoice);
         importDetails.setQuantity(importDetailRequestDto.getQuantity());
-        importDetails.setPrice(importDetailRequestDto.getPrice());
         importDetails.setSubtotal(importDetailRequestDto.getSubtotal());
         importDetails.setVat(importDetailRequestDto.getVat());
         importDetails.setDiscount(importDetailRequestDto.getDiscount());
@@ -112,17 +107,13 @@ public class ImportDetailsServiceImpl implements ImportDetailsService {
         Product product = productRepository.findById(importDetailRequestDto.getProductId())
                 .orElseThrow(() -> new RuntimeException("Product not found for id " + importDetailRequestDto.getProductId()));
 
-        ImportInvoice importInvoice = importInvoiceRepository.findById(importDetailRequestDto.getInvoicesId())
-                .orElseThrow(() -> new RuntimeException("Import Invoice not found for id " + importDetailRequestDto.getInvoicesId()));
+//        ImportInvoice importInvoice = importInvoiceRepository.findById(importDetailRequestDto.getInvoicesId())
+//                .orElseThrow(() -> new RuntimeException("Import Invoice not found for id " + importDetailRequestDto.getInvoicesId()));
 
-        Dskhohang dskhohang = dskhohangRepository.findById(importDetailRequestDto.getKhohangId())
-                .orElseThrow(() -> new RuntimeException("Warehouse not found for id " + importDetailRequestDto.getKhohangId()));
 
         importDetails.setProduct(product);
-        importDetails.setImportInvoice(importInvoice);
-        importDetails.setDskhohang(dskhohang);
+//        importDetails.setImportInvoice(importInvoice);
         importDetails.setQuantity(importDetailRequestDto.getQuantity());
-        importDetails.setPrice(importDetailRequestDto.getPrice());
         importDetails.setSubtotal(importDetailRequestDto.getSubtotal());
         importDetails.setVat(importDetailRequestDto.getVat());
         importDetails.setDiscount(importDetailRequestDto.getDiscount());
