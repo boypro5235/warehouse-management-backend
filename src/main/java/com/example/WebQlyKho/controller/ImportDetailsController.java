@@ -138,9 +138,9 @@ public class ImportDetailsController {
     @DeleteMapping("/{productId}/{invoicesId}")
     public ResponseEntity<Object> deleteImportDetailsById(
             @PathVariable Integer productId,
-            @PathVariable Integer invoicesId) {
+            @PathVariable Integer importInvoiceId) {
         try {
-            ImportDetailsIds id = new ImportDetailsIds(productId, invoicesId);
+            ImportDetailsIds id = new ImportDetailsIds(productId, importInvoiceId);
             importDetailsService.deleteImportDetailsById(id);
             return APIResponse.responseBuilder(null, "Import details deleted", HttpStatus.OK);
         }  catch (Exception e) {

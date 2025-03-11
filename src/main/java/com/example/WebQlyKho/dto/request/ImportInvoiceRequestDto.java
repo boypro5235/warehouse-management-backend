@@ -4,18 +4,13 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Data;
 
-import java.util.List;
-
 @Data
 public class ImportInvoiceRequestDto {
     @NotNull(message = "Supplier Id is required")
     @Positive(message = "Supplier Id must be positive")
     private int supplierId;
 
-    @NotNull(message = "khohangId is required")
-    @Positive(message = "khohangId must be positive")
-    private Integer khohangId;
-
+    @NotNull(message = "Import date is required")
     private String importDate;
 
     @NotNull(message = "Total amount is required")
@@ -27,7 +22,4 @@ public class ImportInvoiceRequestDto {
     private float discount;
 
     private double finalAmount;
-
-    private List<ImportDetailRequestDto> importDetails;
-
 }

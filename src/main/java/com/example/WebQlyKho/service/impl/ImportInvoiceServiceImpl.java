@@ -1,15 +1,11 @@
 package com.example.WebQlyKho.service.impl;
 
-import com.example.WebQlyKho.dto.request.ImportDetailRequestDto;
 import com.example.WebQlyKho.dto.request.ImportInvoiceRequestDto;
-import com.example.WebQlyKho.entity.ImportDetails;
 import com.example.WebQlyKho.entity.ImportInvoice;
-import com.example.WebQlyKho.repository.*;
-import com.example.WebQlyKho.service.ImportInvoiceService;
-import com.example.WebQlyKho.service.ProductService;
 import com.example.WebQlyKho.repository.ImportInvoiceRepository;
 import com.example.WebQlyKho.repository.SupplierRepository;
 import com.example.WebQlyKho.repository.UserRepository;
+import com.example.WebQlyKho.service.ImportInvoiceService;
 import com.example.WebQlyKho.utils.JwtTokenProvider;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -44,19 +40,10 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
     private final SupplierRepository supplierRepository;
 
     @Autowired
-    private final DskhohangRepository dskhohangRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    private final ProductRepository productRepository;
-
-    @Autowired
-    private final ImportDetailsRepository importDetailsRepository;
-
-    @Autowired
-    private final UserRepository userRepository;
-
-    @Autowired
-    private final JwtTokenProvider jwtTokenProvider;
+    private JwtTokenProvider jwtTokenProvider;
 
     @Override
     public Map<String, Object> searchImportInvoices(Integer supplierId, String importDate, String fromDate, String toDate, int page, int size) {
@@ -135,56 +122,49 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
 
     @Override
     public ImportInvoice createImportInvoice(ImportInvoiceRequestDto importInvoiceRequestDto, HttpServletRequest request) {
-        ImportInvoice invoice = new ImportInvoice();
-        invoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow( ()->
-                new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + importInvoiceRequestDto.getSupplierId())));
-        invoice.setImportDate(LocalDate.now());
-        invoice.setTotalAmount(importInvoiceRequestDto.getTotalAmount());
-        invoice.setFinalAmount(importInvoiceRequestDto.getFinalAmount());
-        invoice.setVat(importInvoiceRequestDto.getVat());
-        invoice.setDiscount(importInvoiceRequestDto.getDiscount());
-        invoice.setDskhohang(dskhohangRepository.findById(importInvoiceRequestDto.getKhohangId()).orElseThrow(()->
-                new EntityNotFoundException("Không tìm thấy kho hàng với id = " + importInvoiceRequestDto.getKhohangId())));
-        invoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(request)).orElseThrow(()->
-                new EntityNotFoundException("Không tìm thấy user với id = " + jwtTokenProvider.getUserIdFromToken(request))));
-        ImportInvoice savedInvoice = importInvoiceRepository.save(invoice);
-
-        for (ImportDetailRequestDto detailsRequest : importInvoiceRequestDto.getImportDetails()) {
-            ImportDetails details = new ImportDetails();
-            details.setImportInvoice(savedInvoice);
-            details.setProduct(productRepository.findById(detailsRequest.getProductId()).orElseThrow(()->
-                    new EntityNotFoundException("Không tìm thấy sản phẩm với id = " + detailsRequest.getProductId())));
-            details.setQuantity(detailsRequest.getQuantity());
-            details.setVat(detailsRequest.getVat());
-            details.setDiscount(detailsRequest.getDiscount());
-            details.setSubtotal(detailsRequest.getSubtotal());
-            details.setTotalAmount(detailsRequest.getTotalAmount());
-            importDetailsRepository.save(details);
+        try {
+            ImportInvoice importInvoice = new ImportInvoice();
+            importInvoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + importInvoiceRequestDto.getSupplierId())));
+            try {
+                importInvoice.setImportDate(LocalDate.parse(importInvoiceRequestDto.getImportDate()));
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Invalid import date format: " + importInvoiceRequestDto.getImportDate());
+            }
+            importInvoice.setTotalAmount(importInvoiceRequestDto.getTotalAmount());
+            importInvoice.setVat(importInvoiceRequestDto.getVat());
+            importInvoice.setDiscount(importInvoiceRequestDto.getDiscount());
+            importInvoice.setFinalAmount(importInvoiceRequestDto.getFinalAmount());
+            importInvoice.setStatus(true);
+            importInvoice.setCreatedAt(LocalDateTime.now());
+            importInvoice.setUpdatedAt(LocalDateTime.now());
+            importInvoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(request)).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy user")));
+            return importInvoiceRepository.save(importInvoice);
+        } catch (Exception e) {
+            log.error("Error creating import invoice", e);
+            return null;
         }
-        return savedInvoice;
     }
 
     @Override
     public ImportInvoice updateImportInvoice(Integer invoicesId, ImportInvoiceRequestDto importInvoiceRequestDto) {
-////        try {
-//            ImportInvoice importInvoice = importInvoiceRepository.findById(invoicesId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hóa đơn nhập hàng với id = " + invoicesId));
-//            importInvoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + importInvoiceRequestDto.getSupplierId())));
-//            try {
-//                importInvoice.setImportDate(LocalDate.parse(importInvoiceRequestDto.getImportDate()));
-//            } catch (DateTimeParseException e) {
-//                throw new IllegalArgumentException("Invalid import date format: " + importInvoiceRequestDto.getImportDate());
-//            }
-//            importInvoice.setTotalAmount(importInvoiceRequestDto.getTotalAmount());
-//            importInvoice.setVat(importInvoiceRequestDto.getVat());
-//            importInvoice.setDiscount(importInvoiceRequestDto.getDiscount());
-//            importInvoice.setFinalAmount(importInvoiceRequestDto.getFinalAmount());
-//            importInvoice.setUpdatedAt(LocalDateTime.now());
-//            return importInvoiceRepository.save(importInvoice);
-////        } catch (Exception e) {
-////            log.error("Error updating import invoice", e);
-////            return null;
-////        }
-        return null;
+//        try {
+            ImportInvoice importInvoice = importInvoiceRepository.findById(invoicesId).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy hóa đơn nhập hàng với id = " + invoicesId));
+            importInvoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow(() -> new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + importInvoiceRequestDto.getSupplierId())));
+            try {
+                importInvoice.setImportDate(LocalDate.parse(importInvoiceRequestDto.getImportDate()));
+            } catch (DateTimeParseException e) {
+                throw new IllegalArgumentException("Invalid import date format: " + importInvoiceRequestDto.getImportDate());
+            }
+            importInvoice.setTotalAmount(importInvoiceRequestDto.getTotalAmount());
+            importInvoice.setVat(importInvoiceRequestDto.getVat());
+            importInvoice.setDiscount(importInvoiceRequestDto.getDiscount());
+            importInvoice.setFinalAmount(importInvoiceRequestDto.getFinalAmount());
+            importInvoice.setUpdatedAt(LocalDateTime.now());
+            return importInvoiceRepository.save(importInvoice);
+//        } catch (Exception e) {
+//            log.error("Error updating import invoice", e);
+//            return null;
+//        }
     }
 
     @Override

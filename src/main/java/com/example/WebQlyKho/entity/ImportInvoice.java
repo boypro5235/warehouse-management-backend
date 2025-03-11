@@ -19,14 +19,6 @@ public class ImportInvoice {
     private Integer invoicesId;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
-
-    @ManyToOne
-    @JoinColumn(name = "khohang_id", nullable = false)
-    private Dskhohang dskhohang;
-
-    @ManyToOne
     @JoinColumn(name = "supplier_id", nullable = false)
     private Supplier supplier;
 
