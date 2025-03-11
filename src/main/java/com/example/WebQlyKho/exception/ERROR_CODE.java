@@ -6,6 +6,8 @@ public enum ERROR_CODE {
     USERNAME_EXISTED(HttpStatus.BAD_REQUEST, "User already in use!"),
     EMAIL_EXISTED(HttpStatus.BAD_REQUEST, "Email already in use!"),
     CCCD_EXISTED(HttpStatus.BAD_REQUEST, "Cccd already in use!"),
+    WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "Wrong password!"),
+    INACTIVE_ACCOUNT(HttpStatus.BAD_REQUEST, "Inactive account!"),
     ;
     private final HttpStatus code;
     private final String message;

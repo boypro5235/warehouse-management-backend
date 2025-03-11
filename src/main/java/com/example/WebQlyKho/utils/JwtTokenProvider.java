@@ -2,6 +2,7 @@ package com.example.WebQlyKho.utils;
 
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -33,6 +34,20 @@ public class JwtTokenProvider {
     // Validate token
     public boolean validateToken(String token) {
         try{
+            Jwts.parser().setSigningKey(signalKey).parseClaimsJws(token);
+            return true;
+        } catch (Exception e){
+            throw new RuntimeException(e.getLocalizedMessage());
+        }
+    }
+
+    // Validate token
+    public boolean validateToken(HttpServletRequest request) {
+        try{
+            if(request.getHeader("Authorization") == null || !request.getHeader("Authorization").startsWith("Bearer ")){
+                throw new RuntimeException("Token Invalid");
+            }
+            String token = request.getHeader("Authorization").substring(7);
             Jwts.parser().setSigningKey(signalKey).parseClaimsJws(token);
             return true;
         } catch (Exception e){
