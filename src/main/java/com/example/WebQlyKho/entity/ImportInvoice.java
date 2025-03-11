@@ -30,14 +30,6 @@ public class ImportInvoice {
     @JoinColumn(name = "supplier_id", nullable = false)
     private Supplier supplier;
 
-    @ManyToOne
-    @JoinColumn(name = "khohang_id", nullable = false)
-    private Dskhohang dskhohang;
-
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
-
     @Column(name="import_date", nullable = false)
     private LocalDate importDate;
 
