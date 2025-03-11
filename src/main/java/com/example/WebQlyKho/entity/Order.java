@@ -30,6 +30,10 @@ public class Order {
     @Column(name = "address")
     private String address;
 
+    @ManyToOne
+    @JoinColumn(name = "khohang_id", nullable = false)
+    private Dskhohang dskhohang;
+
     @Column(name = "total_amount")
     private double totalAmount;
 

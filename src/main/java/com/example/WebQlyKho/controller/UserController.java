@@ -2,12 +2,16 @@ package com.example.WebQlyKho.controller;
 
 import com.example.WebQlyKho.dto.request.LoginRequestDto;
 import com.example.WebQlyKho.dto.request.RegisterRequestDto;
+import com.example.WebQlyKho.dto.request.UpdateUserRequestDto;
 import com.example.WebQlyKho.dto.response.APIResponse;
+import com.example.WebQlyKho.dto.response.LoginResponseDto;
 import com.example.WebQlyKho.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,16 +20,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/hello")
-    public String hello() {
-        return "Hello";
+    @GetMapping("/getAllUser")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> getAllUser() {
+        return APIResponse.responseBuilder(
+                userService.getAllUser(),
+                "Get all user successfully",
+                HttpStatus.OK);
     }
 
     @PostMapping("/login")
     public ResponseEntity<Object> login(@RequestBody @Valid LoginRequestDto request) {
-        String token = userService.Login(request);
+        LoginResponseDto responseDto = userService.Login(request);
         return APIResponse.responseBuilder(
-                token,
+                responseDto,
                 "Login successfully",
                 HttpStatus.OK);
     }
@@ -37,5 +45,34 @@ public class UserController {
                 null,
                 "Register successfully",
                 HttpStatus.OK);
+    }
+
+    @PostMapping("/deleteUser")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<Object> deleteUser(@RequestParam int id) {
+        userService.deleteUser(id);
+        return APIResponse.responseBuilder(
+                null,
+                "Delete user successfully",
+                HttpStatus.OK);
+    }
+
+    @PostMapping("/updateUser")
+    public ResponseEntity<Object> updateUser(@RequestBody @Valid UpdateUserRequestDto requestDto){
+        userService.updateUser(requestDto);
+        return APIResponse.responseBuilder(
+                null,
+                "Update user Succesfully",
+                HttpStatus.OK
+        );
+    }
+
+    @GetMapping("/getUserInfo")
+    public ResponseEntity<Object> getUserInfo(HttpServletRequest request){
+        return APIResponse.responseBuilder(
+                userService.getUserInfo(request),
+                "Get user info successfully",
+                HttpStatus.OK
+        );
     }
 }
