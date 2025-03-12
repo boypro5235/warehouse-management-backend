@@ -8,6 +8,9 @@ public enum ERROR_CODE {
     CCCD_EXISTED(HttpStatus.BAD_REQUEST, "Cccd already in use!"),
     WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "Wrong password!"),
     INACTIVE_ACCOUNT(HttpStatus.BAD_REQUEST, "Inactive account!"),
+    EXPIRED_TOKEN(HttpStatus.BAD_REQUEST, "Token expired!"),
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST, "Invalid token!"),
+    INVALID_SIGNATURE(HttpStatus.BAD_REQUEST, "Invalid signature!"),
     ;
     private final HttpStatus code;
     private final String message;
