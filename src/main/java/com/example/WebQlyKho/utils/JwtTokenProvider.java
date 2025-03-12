@@ -36,7 +36,6 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
-
     // Get username from token
     public Integer getUserIdFromToken(String token) {
         return (int)Jwts.parser().setSigningKey(signalKey)

@@ -57,9 +57,7 @@ public class ImportInvoiceController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createImportInvoice(@RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto,
-                                                      BindingResult bindingResult,
-                                                      HttpServletRequest request) {
+    public ResponseEntity<Object> createImportInvoice(@RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto, BindingResult bindingResult, HttpServletRequest request) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -108,7 +106,7 @@ public class ImportInvoiceController {
     }
 
     @PutMapping("/{invoicesId}")
-    public ResponseEntity<Object> updateImportInvoice(@PathVariable Integer invoicesId, @RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto, BindingResult bindingResult) {
+    public ResponseEntity<Object> updateImportInvoice(@PathVariable Integer invoicesId, @RequestBody @Valid ImportInvoiceRequestDto importInvoiceRequestDto, BindingResult bindingResult,HttpServletRequest httpServletRequest) {
         try {
             Map<String, String> errors = new HashMap<>();
             if (bindingResult.hasErrors()) {
@@ -123,7 +121,7 @@ public class ImportInvoiceController {
                         HttpStatus.BAD_REQUEST
                 );
             }
-            ImportInvoice importInvoice = importInvoiceService.updateImportInvoice(invoicesId, importInvoiceRequestDto);
+            ImportInvoice importInvoice = importInvoiceService.updateImportInvoice(invoicesId, importInvoiceRequestDto,httpServletRequest);
             return APIResponse.responseBuilder(importInvoice, "Import invoice updated successfully", HttpStatus.OK);
         } catch (EntityNotFoundException e) {
             return APIResponse.responseBuilder(null, e.getMessage(), HttpStatus.NOT_FOUND);

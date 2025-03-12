@@ -1,5 +1,6 @@
 package com.example.WebQlyKho.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "import_invoices")
@@ -19,16 +21,16 @@ public class ImportInvoice {
     private Integer invoicesId;
 
     @ManyToOne
-    @JoinColumn(name = "supplier_id", nullable = false)
-    private Supplier supplier;
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne
     @JoinColumn(name = "khohang_id", nullable = false)
     private Dskhohang dskhohang;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "supplier_id", nullable = false)
+    private Supplier supplier;
 
     @Column(name="import_date", nullable = false)
     private LocalDate importDate;
@@ -52,4 +54,8 @@ public class ImportInvoice {
 
     @Column(name = "final_amount")
     private double finalAmount;
+
+    @OneToMany(mappedBy = "importInvoice", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ImportDetails> importDetails;
 }
