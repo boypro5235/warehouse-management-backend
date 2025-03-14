@@ -27,7 +27,7 @@ public class Dskhohang {
     private String contact;
 
     @Column(name = "status")
-    private boolean status;
+    private Boolean status = true;
 
     @Column(name = "created_at")
     private LocalDateTime createdAt;
