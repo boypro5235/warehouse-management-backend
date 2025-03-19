@@ -1,7 +1,8 @@
 package com.example.WebQlyKho.utils;
 
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.example.WebQlyKho.exception.CustomException;
+import com.example.WebQlyKho.exception.ERROR_CODE;
+import io.jsonwebtoken.*;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 
@@ -73,6 +74,12 @@ public class JwtTokenProvider {
             String token = request.getHeader("Authorization").substring(7);
             Jwts.parser().setSigningKey(signalKey).parseClaimsJws(token);
             return true;
+        } catch (ExpiredJwtException e) {
+            throw new CustomException(ERROR_CODE.EXPIRED_TOKEN);
+        } catch (SignatureException e) {
+            throw new CustomException(ERROR_CODE.INVALID_SIGNATURE);
+        } catch (MalformedJwtException e) {
+            throw new CustomException(ERROR_CODE.INVALID_TOKEN);
         } catch (Exception e){
             throw new RuntimeException(e.getLocalizedMessage());
         }
