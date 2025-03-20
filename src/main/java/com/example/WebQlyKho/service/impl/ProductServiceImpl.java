@@ -6,6 +6,7 @@ import com.example.WebQlyKho.entity.Product;
 import com.example.WebQlyKho.exception.CategoryNotFoundException;
 import com.example.WebQlyKho.repository.CategoryRepository;
 import com.example.WebQlyKho.repository.ProductRepository;
+import com.example.WebQlyKho.repository.StockRepository;
 import com.example.WebQlyKho.service.ProductService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.persistence.criteria.CriteriaBuilder;
@@ -35,6 +36,9 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    @Autowired
+    private StockRepository stockRepository;
+
     @Override
     public List<Product> getProductByCategoryId(Integer categoryId) {
         // Tìm category dựa trên ID
@@ -58,7 +62,7 @@ public class ProductServiceImpl implements ProductService {
                     List<Predicate> predicates = new ArrayList<>();
                     // Add search by name
                     predicates.add(criteriaBuilder.like(root.get("productName"), "%" + searchText + "%"));
-                    // Filter by company ID
+                    // Filter by category ID
                     if (categoryId != null) {
                         predicates.add(criteriaBuilder.equal(root.get("category").get("categoryId"), categoryId));
                     }
@@ -67,8 +71,16 @@ public class ProductServiceImpl implements ProductService {
             };
 
             Page<Product> pageProduct = productRepository.findAll(specification, pageable);
+            List<Map<String, Object>> productList = new ArrayList<>();
+            for (Product product : pageProduct.getContent()) {
+                Map<String, Object> productData = new HashMap<>();
+                productData.put("product", product);
+                productData.put("currentStock", stockRepository.calculateStock(product.getProductId()));
+                productList.add(productData);
+            }
+
             Map<String, Object> mapProduct = new HashMap<>();
-            mapProduct.put("listProduct", pageProduct.getContent());
+            mapProduct.put("listProduct", productList);
             mapProduct.put("pageSize", pageProduct.getSize());
             mapProduct.put("pageNo", pageProduct.getNumber() + 1);
             mapProduct.put("totalPage", pageProduct.getTotalPages());
