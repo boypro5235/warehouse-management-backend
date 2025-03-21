@@ -2,6 +2,7 @@ package com.example.WebQlyKho.service.impl;
 
 import com.example.WebQlyKho.dto.request.ImportDetailRequestDto;
 import com.example.WebQlyKho.dto.request.ImportInvoiceRequestDto;
+import com.example.WebQlyKho.entity.Dskhohang;
 import com.example.WebQlyKho.entity.ImportDetails;
 import com.example.WebQlyKho.entity.ImportInvoice;
 import com.example.WebQlyKho.repository.*;
@@ -138,23 +139,29 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
     @Override
     public ImportInvoice createImportInvoice(ImportInvoiceRequestDto importInvoiceRequestDto, HttpServletRequest request) {
         ImportInvoice invoice = new ImportInvoice();
-        invoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow( ()->
+        invoice.setSupplier(supplierRepository.findById(importInvoiceRequestDto.getSupplierId()).orElseThrow(() ->
                 new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + importInvoiceRequestDto.getSupplierId())));
+
+        Dskhohang dskhohang = dskhohangRepository.findById(importInvoiceRequestDto.getKhohangId()).orElseThrow(() ->
+                new EntityNotFoundException("Không tìm thấy kho hàng với id = " + importInvoiceRequestDto.getKhohangId()));
+        if (!dskhohang.getStatus()) {
+            throw new IllegalArgumentException("Kho hàng với id = " + importInvoiceRequestDto.getKhohangId() + " không hoạt động");
+        }
+        invoice.setDskhohang(dskhohang);
+
         invoice.setImportDate(LocalDate.now());
         invoice.setTotalAmount(importInvoiceRequestDto.getTotalAmount());
         invoice.setFinalAmount(importInvoiceRequestDto.getFinalAmount());
         invoice.setVat(importInvoiceRequestDto.getVat());
         invoice.setDiscount(importInvoiceRequestDto.getDiscount());
-        invoice.setDskhohang(dskhohangRepository.findById(importInvoiceRequestDto.getKhohangId()).orElseThrow(()->
-                new EntityNotFoundException("Không tìm thấy kho hàng với id = " + importInvoiceRequestDto.getKhohangId())));
-        invoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(request)).orElseThrow(()->
+        invoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(request)).orElseThrow(() ->
                 new EntityNotFoundException("Không tìm thấy user với id = " + jwtTokenProvider.getUserIdFromToken(request))));
         ImportInvoice savedInvoice = importInvoiceRepository.save(invoice);
 
         for (ImportDetailRequestDto detailsRequest : importInvoiceRequestDto.getImportDetails()) {
             ImportDetails details = new ImportDetails();
             details.setImportInvoice(savedInvoice);
-            details.setProduct(productRepository.findById(detailsRequest.getProductId()).orElseThrow(()->
+            details.setProduct(productRepository.findById(detailsRequest.getProductId()).orElseThrow(() ->
                     new EntityNotFoundException("Không tìm thấy sản phẩm với id = " + detailsRequest.getProductId())));
             details.setQuantity(detailsRequest.getQuantity());
             details.setVat(detailsRequest.getVat());
@@ -173,16 +180,22 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
                 .orElseThrow(() -> new EntityNotFoundException("Invoice not found"));
 
         // Update invoice details
-        invoice.setSupplier(supplierRepository.findById(request.getSupplierId()).orElseThrow(()->
+        invoice.setSupplier(supplierRepository.findById(request.getSupplierId()).orElseThrow(() ->
                 new EntityNotFoundException("Không tìm thấy nhà cung cấp với id = " + request.getSupplierId())));
-        invoice.setDskhohang(dskhohangRepository.findById(request.getKhohangId()).orElseThrow(()->
-                new EntityNotFoundException("Không tìm thấy kho hàng với id = " + request.getKhohangId())));
+
+        Dskhohang dskhohang = dskhohangRepository.findById(request.getKhohangId()).orElseThrow(() ->
+                new EntityNotFoundException("Không tìm thấy kho hàng với id = " + request.getKhohangId()));
+        if (!dskhohang.getStatus()) {
+            throw new IllegalArgumentException("Kho hàng với id = " + request.getKhohangId() + " không hoạt động");
+        }
+        invoice.setDskhohang(dskhohang);
+
         invoice.setTotalAmount(request.getTotalAmount());
         invoice.setFinalAmount(request.getFinalAmount());
         invoice.setVat(request.getVat());
         invoice.setDiscount(request.getDiscount());
         invoice.setUpdatedAt(LocalDateTime.now());
-        invoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(httpServletRequest)).orElseThrow(()->
+        invoice.setUser(userRepository.findById(jwtTokenProvider.getUserIdFromToken(httpServletRequest)).orElseThrow(() ->
                 new EntityNotFoundException("Không tìm thấy user với id = " + jwtTokenProvider.getUserIdFromToken(httpServletRequest))));
 
         // Fetch current ImportDetails from the database
@@ -211,7 +224,7 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
                 // Create new ImportDetail
                 ImportDetails newDetail = new ImportDetails();
                 newDetail.setImportInvoice(invoice);
-                newDetail.setProduct(productRepository.findById(detailsRequest.getProductId()).orElseThrow(()->
+                newDetail.setProduct(productRepository.findById(detailsRequest.getProductId()).orElseThrow(() ->
                         new EntityNotFoundException("Không tìm thấy sản phẩm với id = " + detailsRequest.getProductId())));
                 newDetail.setQuantity(detailsRequest.getQuantity());
                 newDetail.setVat(detailsRequest.getVat());
