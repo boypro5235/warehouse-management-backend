@@ -13,7 +13,6 @@ import lombok.Setter;
 public class UpdateUserRequestDto {
     private Integer id;
     private String fullname;
-    private String password;
     @Pattern(regexp = StringRegex.EMAIL_PATTERN, message = "Email không đúng định dạng")
     private String email;
     private String phone;
