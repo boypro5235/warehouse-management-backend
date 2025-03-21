@@ -248,6 +248,6 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
             throw new EntityNotFoundException("Import invoices not found for ids: " + notFoundIds);
         }
 
-        importInvoiceRepository.deleteAll(importInvoicesToDelete);
-    }
+        importInvoicesToDelete.forEach(invoice -> invoice.setStatus(false));
+        importInvoiceRepository.saveAll(importInvoicesToDelete);    }
 }
