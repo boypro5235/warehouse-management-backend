@@ -95,29 +95,32 @@ public class UserServiceIplm implements UserService {
     @Override
     public List<User> getAllUser() {
         List<User> users = userRepository.findAll();
-        return users.stream().filter(User::isStatus).filter(user -> !user.getUsername().equals("admin")).toList();
+        return users.stream().filter(User::isStatus)
+                .filter(user -> !user.getUsername().equals("admin"))
+                .toList();
     }
 
     @Override
     public void deleteUser(int id) {
-        User user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("User not found"));
         user.setStatus(false);
         userRepository.save(user);
     }
 
     @Override
     public void updateUser(UpdateUserRequestDto request) {
-        User user = userRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(request.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
         userUpdateMapper.updateUserFromDto(request, user);
-        if(request.getPassword() != null){
-            user.setPassword(passwordEncoder.encode(request.getPassword()));
-        }
+       user.setUpdatedAt(LocalDateTime.now());
         userRepository.save(user);
     }
 
     @Override
     public void changePassword(ChangePasswordRequestDto request) {
-        User user = userRepository.findById(request.getId()).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findById(request.getId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
         if(!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())){
             throw new CustomException(ERROR_CODE.WRONG_PASSWORD);
         }
