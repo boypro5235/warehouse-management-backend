@@ -1,13 +1,20 @@
 package com.example.WebQlyKho.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.time.LocalDateTime;
 
 @Entity(name = "orders")
+@Getter
+@Setter
+@AllArgsConstructor
 public class Order {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")
     private Integer orderId;
 
@@ -18,11 +25,11 @@ public class Order {
     @Column(name = "order_status")
     private String orderStatus;
 
-    @Column(name = "order_type_id")
-    private String orderType;
+    @Column(name = "order_type")
+    private Integer orderType;
 
     @Column(name = "status")
-    private String status;
+    private boolean status;
 
     @Column(name = "customer")
     private String customer;
@@ -52,4 +59,7 @@ public class Order {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
+    public Order() {
+
+    }
 }

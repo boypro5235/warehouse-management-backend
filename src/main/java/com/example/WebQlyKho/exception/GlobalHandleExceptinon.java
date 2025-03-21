@@ -1,8 +1,10 @@
 package com.example.WebQlyKho.exception;
 
 import com.example.WebQlyKho.dto.response.APIResponse;
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
@@ -25,5 +27,23 @@ public class GlobalHandleExceptinon {
                 exception.getErrorCode().getCode()
                 );
 
+    }
+
+    @ExceptionHandler(value = MethodArgumentNotValidException.class)
+    public ResponseEntity<Object> handlerMethodArgumentNotValidException(MethodArgumentNotValidException exception){
+        return APIResponse.responseBuilder(
+                null,
+                exception.getFieldError().getDefaultMessage(),
+                HttpStatus.BAD_REQUEST
+                );
+    }
+
+    @ExceptionHandler(value = MalformedJwtException.class)
+    public ResponseEntity<Object> handlerMalformedJwtException(MalformedJwtException exception){
+        return APIResponse.responseBuilder(
+                null,
+                exception.getLocalizedMessage(),
+                HttpStatus.BAD_REQUEST
+                );
     }
 }

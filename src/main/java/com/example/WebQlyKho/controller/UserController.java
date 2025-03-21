@@ -47,9 +47,9 @@ public class UserController {
                 HttpStatus.OK);
     }
 
-    @PostMapping("/deleteUser")
+    @PostMapping("/deleteUser/{id}")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Object> deleteUser(@RequestParam int id) {
+    public ResponseEntity<Object> deleteUser(@PathVariable Integer id) {
         userService.deleteUser(id);
         return APIResponse.responseBuilder(
                 null,

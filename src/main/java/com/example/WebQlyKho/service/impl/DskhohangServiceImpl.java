@@ -40,8 +40,10 @@ public class DskhohangServiceImpl implements DskhohangService {
                 @Override
                 public Predicate toPredicate(Root<Dskhohang> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
                     List<Predicate> predicates = new ArrayList<>();
-                    // Add search by name
-                    predicates.add(criteriaBuilder.like(root.get("name"), "%" + searchText + "%"));
+                    // Add search by name or address
+                    Predicate namePredicate = criteriaBuilder.like(root.get("name"), "%" + searchText + "%");
+                    Predicate addressPredicate = criteriaBuilder.like(root.get("address"), "%" + searchText + "%");
+                    predicates.add(criteriaBuilder.or(namePredicate, addressPredicate));
                     return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
                 }
             };
