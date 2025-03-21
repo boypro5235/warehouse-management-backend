@@ -19,7 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("api/suppliers")
+    @RequestMapping("api/suppliers")
 @RequiredArgsConstructor
 @Slf4j
 public class SupplierController {
