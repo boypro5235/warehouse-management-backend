@@ -1,6 +1,7 @@
 package com.example.WebQlyKho.service;
 
 import com.example.WebQlyKho.dto.request.CreateOrderDto;
+import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.request.ImportInvoiceRequestDto;
 import com.example.WebQlyKho.entity.ImportInvoice;
 import com.example.WebQlyKho.entity.Order;
@@ -15,5 +16,5 @@ public interface OrderService {
     List<Order> getAllOrder();
     List<Order> searchOrders(String orderStatus, Integer orderType, String customer, String fromDate, String toDate);
     Order updateOrder(Integer orderId, CreateOrderDto request, HttpServletRequest httpServletRequest);
-    void deleteImportInvoice(List<Integer> ids);
+    void deleteImportInvoice(DeleteRequest ids);
  }
