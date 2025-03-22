@@ -99,8 +99,7 @@ public class OrderServiceIplm implements OrderService {
 
     @Override
     public Order updateOrder(Integer orderId, CreateOrderDto createOrderDto, HttpServletRequest request) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new EntityNotFoundException("Order not found!"));
+        Order order = orderRepository.findByOrderId(orderId);
 
         User user = userRepository.findByUsername(jwtTokenProvider.getUsernameFromToken(request.getHeader("Authorization").substring(7)));
         if(createOrderDto.getOrderType() == 1){
