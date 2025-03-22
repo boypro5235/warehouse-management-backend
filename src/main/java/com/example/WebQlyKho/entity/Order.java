@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 public class Order {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "order_id")

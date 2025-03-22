@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
-public class DeliveryInfoServiceimpl implements DeliveryInfoService {
+public class DeliveryInfoServiceImpl implements DeliveryInfoService {
 
     @Autowired
     private DeliveryInfoRepository deliveryInfoRepository;
@@ -52,19 +52,24 @@ public class DeliveryInfoServiceimpl implements DeliveryInfoService {
         return deliveryInfoRepository.save(existingDeliveryInfo);
     }
 
+    @Override
     public void deleteDeliveryInfo(Integer deliveryId) {
-        if (!deliveryInfoRepository.existsById(deliveryId)) {
-            throw new EntityNotFoundException("DeliveryInfo not found with id: " + deliveryId);
-        }
-        deliveryInfoRepository.deleteById(deliveryId);
+        DeliveryInfo deliveryInfo = deliveryInfoRepository.findById(deliveryId)
+                .orElseThrow(() -> new EntityNotFoundException("DeliveryInfo not found with id: " + deliveryId));
+       deliveryInfo.setStatus(false);
+        deliveryInfoRepository.save(deliveryInfo);
     }
 
+    @Override
     public DeliveryInfo getDeliveryInfoById(Integer deliveryId) {
         return deliveryInfoRepository.findById(deliveryId)
                 .orElseThrow(() -> new EntityNotFoundException("DeliveryInfo not found with id: " + deliveryId));
     }
 
+    @Override
     public List<DeliveryInfo> getAllDeliveryInfos() {
         return deliveryInfoRepository.findAll();
     }
+
+
 }

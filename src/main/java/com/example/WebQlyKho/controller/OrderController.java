@@ -1,6 +1,7 @@
 package com.example.WebQlyKho.controller;
 
 import com.example.WebQlyKho.dto.request.CreateOrderDto;
+import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
 import com.example.WebQlyKho.entity.Order;
 import com.example.WebQlyKho.service.OrderService;
@@ -35,7 +36,7 @@ public class OrderController {
 
     // Xóa đơn hàng
     @DeleteMapping("/delete")
-    public ResponseEntity<Object> deleteOrders(@RequestBody List<Integer> orderIds) {
+    public ResponseEntity<Object> deleteOrders(@RequestBody DeleteRequest orderIds) {
         orderService.deleteImportInvoice(orderIds);
         return APIResponse.responseBuilder(null, "Orders deleted successfully", HttpStatus.OK);
     }

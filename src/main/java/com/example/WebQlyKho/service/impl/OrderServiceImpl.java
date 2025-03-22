@@ -1,6 +1,7 @@
 package com.example.WebQlyKho.service.impl;
 
 import com.example.WebQlyKho.dto.request.CreateOrderDto;
+import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.request.OrderDetailsRequest;
 import com.example.WebQlyKho.entity.Order;
 import com.example.WebQlyKho.entity.OrderDetails;
@@ -26,7 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class OrderServiceIplm implements OrderService {
+public class OrderServiceImpl implements OrderService {
     @Autowired
     private DskhohangRepository dskhohangRepository;
 
@@ -211,10 +212,10 @@ public class OrderServiceIplm implements OrderService {
     }
 
     @Override
-    public void deleteImportInvoice(List<Integer> ids) {
-        List<Order> ordersDelete = orderRepository.findAllById(ids);
+    public void deleteImportInvoice(DeleteRequest ids) {
+        List<Order> ordersDelete = orderRepository.findAllById(ids.getIds());
 
-        List<Integer> notFoundIds = ids.stream()
+        List<Integer> notFoundIds = ids.getIds().stream()
                 .filter(id -> ordersDelete.stream().noneMatch(order -> order.getOrderId().equals(id)))
                 .toList();
 
