@@ -1,4 +1,4 @@
-package com.example.WebQlyKho.category.service;
+package com.example.WebQlyKho.Category.service;
 
 import com.example.WebQlyKho.dto.request.CreateCategoryDto;
 import com.example.WebQlyKho.entity.Category;

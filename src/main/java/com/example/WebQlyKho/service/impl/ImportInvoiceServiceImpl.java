@@ -7,7 +7,6 @@ import com.example.WebQlyKho.entity.ImportDetails;
 import com.example.WebQlyKho.entity.ImportInvoice;
 import com.example.WebQlyKho.repository.*;
 import com.example.WebQlyKho.service.ImportInvoiceService;
-import com.example.WebQlyKho.service.ProductService;
 import com.example.WebQlyKho.repository.ImportInvoiceRepository;
 import com.example.WebQlyKho.repository.SupplierRepository;
 import com.example.WebQlyKho.repository.UserRepository;
@@ -128,8 +127,6 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
             throw new IllegalArgumentException("Invalid date format: " + date + ". Please use yyyy-MM-dd", e);
         }
     }
-
-
 
     @Override
     public ImportInvoice getImportInvoiceById(Integer invoicesId) {
@@ -262,5 +259,7 @@ public class ImportInvoiceServiceImpl implements ImportInvoiceService {
         }
 
         importInvoicesToDelete.forEach(invoice -> invoice.setStatus(false));
-        importInvoiceRepository.saveAll(importInvoicesToDelete);    }
+        importInvoiceRepository.saveAll(importInvoicesToDelete);
+    }
+
 }
