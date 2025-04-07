@@ -1,5 +1,6 @@
 package com.example.WebQlyKho.service.impl;
 
+import com.example.WebQlyKho.dto.FinancialReportDTO;
 import com.example.WebQlyKho.dto.request.CreateOrderDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.request.OrderDetailsRequest;
@@ -25,6 +26,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderServiceImpl implements OrderService {
@@ -50,7 +52,7 @@ public class OrderServiceImpl implements OrderService {
     private OrderTypeRepository orderTypeRepository;
 
     @Autowired
-    private StockRepository stockRepository;
+    private ReportRepository reportRepository;
 
     @Override
     public List<Order> searchOrders(String orderStatus, Integer orderType, String customer, String fromDate, String toDate) {
@@ -92,6 +94,7 @@ public class OrderServiceImpl implements OrderService {
                 predicates.add(criteriaBuilder.lessThanOrEqualTo(root.get("createdAt"), LocalDate.parse(finalToDate).atTime(23, 59, 59)));
             }
 
+
             return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
         };
 
@@ -101,14 +104,18 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public Order updateOrder(Integer orderId, CreateOrderDto createOrderDto, HttpServletRequest request) {
         Order order = orderRepository.findByOrderId(orderId);
-
+        if (order == null) {
+            throw new EntityNotFoundException("Order not found with ID: " + orderId);
+        }
+        
         User user = userRepository.findByUsername(jwtTokenProvider.getUsernameFromToken(request.getHeader("Authorization").substring(7)));
         if(createOrderDto.getOrderType() == 1){
             order.setCustomer(null);
             order.setAddress(null);
             order.setDskhohang(dskhohangRepository.findById(createOrderDto.getKhohangId())
                     .orElseThrow(() -> new RuntimeException("Kho hàng không tồn tại!")));
-        } else if (createOrderDto.getOrderType() == 2){
+        }
+        if (createOrderDto.getOrderType() == 2){
             order.setCustomer(createOrderDto.getCustomer());
             order.setAddress(createOrderDto.getAddress());
             order.setDskhohang(null);
@@ -124,10 +131,9 @@ public class OrderServiceImpl implements OrderService {
         orderRepository.save(order);
 
         List<OrderDetails> existedOrderDetails = orderDetailRepository.findByOrderId(orderId);
-        List<OrderDetailsRequest> upcomingOrderDetails = createOrderDto.getOrderDetails();
+        List<OrderDetailsRequest> upcomingOrderDetails = Optional.ofNullable(createOrderDto.getOrderDetails()).orElse(new ArrayList<>());
         List<OrderDetails> deletedOrderDetails = existedOrderDetails.stream()
-                .filter(detail -> upcomingOrderDetails.stream()
-                        .noneMatch(upcomingDetail -> detail.getProduct().getProductId() == upcomingDetail.getProductId()))
+                .filter(detail -> upcomingOrderDetails.stream().noneMatch(upcomingDetail -> detail.getProduct().getProductId() == upcomingDetail.getProductId()))
                 .toList();
         List<OrderDetails> savedOrderDetails = new ArrayList<>();
         for (OrderDetailsRequest upcomingDetail : upcomingOrderDetails) {
@@ -156,24 +162,28 @@ public class OrderServiceImpl implements OrderService {
                 newOrderDetail.setDiscount(upcomingDetail.getDiscount());
                 savedOrderDetails.add(newOrderDetail);
             }
-            orderDetailRepository.deleteAll(deletedOrderDetails);
-            orderDetailRepository.saveAll(savedOrderDetails);
         }
 
-        return null;
-    }
+        orderDetailRepository.deleteAll(deletedOrderDetails);
+        orderDetailRepository.saveAll(savedOrderDetails);
 
+        return order;
+    }
 
     @Override
     public Order createOrder(CreateOrderDto createOrderDto, HttpServletRequest request) {
+
         User user = userRepository.findByUsername(request.getUserPrincipal().getName());
         Order order = new Order();
+        if (createOrderDto.getOrderType() != 1 && createOrderDto.getOrderType() != 2){
+            throw new IllegalArgumentException("OrderType không hợp lệ!.");
+        }
         if(createOrderDto.getOrderType() == 1){
             order.setCustomer(null);
             order.setAddress(null);
             order.setDskhohang(dskhohangRepository.findById(createOrderDto.getKhohangId())
                     .orElseThrow(() -> new RuntimeException("Kho hàng không tồn tại!")));
-        } else if (createOrderDto.getOrderType() == 2){
+        } if (createOrderDto.getOrderType() == 2){
             order.setCustomer(createOrderDto.getCustomer());
             order.setAddress(createOrderDto.getAddress());
             order.setDskhohang(null);
@@ -212,7 +222,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public void deleteImportInvoice(DeleteRequest ids) {
+    public void deleteOrder(DeleteRequest ids) {
         List<Order> ordersDelete = orderRepository.findAllById(ids.getIds());
 
         List<Integer> notFoundIds = ids.getIds().stream()
@@ -242,6 +252,21 @@ public class OrderServiceImpl implements OrderService {
             return LocalDate.parse(date, formatter).toString();
         } catch (DateTimeParseException e) {
             throw new IllegalArgumentException("Invalid date format: " + date + ". Please use yyyy-MM-dd", e);
+        }
+    }
+
+    @Override
+    public List<FinancialReportDTO> FinancialReport(String scope) {
+        if (scope.equals("ngay")) {
+           return reportRepository.getBaoCaoTaiChinhNgay(false);
+        } else if (scope.equals("thang")) {
+            return reportRepository.getBaoCaoTaiChinhThang();
+        } else if (scope.equals("nam")) {
+            return reportRepository.getBaoCaoTaiChinhNam();
+        } else if (scope.equals("ngayct")) {
+            return reportRepository.getBaoCaoTaiChinhNgay(true);
+        } else {
+            throw new IllegalArgumentException("Invalid scope: " + scope);
         }
     }
 }
