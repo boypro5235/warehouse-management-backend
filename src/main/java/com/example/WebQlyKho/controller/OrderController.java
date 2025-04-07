@@ -1,5 +1,6 @@
 package com.example.WebQlyKho.controller;
 
+import com.example.WebQlyKho.dto.FinancialReportDTO;
 import com.example.WebQlyKho.dto.request.CreateOrderDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
@@ -37,7 +38,7 @@ public class OrderController {
     // Xóa đơn hàng
     @DeleteMapping("/delete")
     public ResponseEntity<Object> deleteOrders(@RequestBody DeleteRequest orderIds) {
-        orderService.deleteImportInvoice(orderIds);
+        orderService.deleteOrder(orderIds);
         return APIResponse.responseBuilder(null, "Orders deleted successfully", HttpStatus.OK);
     }
 
@@ -65,6 +66,12 @@ public class OrderController {
             @RequestParam(required = false) String toDate) {
         List<Order> orders = orderService.searchOrders(orderStatus, orderType, customer, fromDate, toDate);
         return APIResponse.responseBuilder(orders, "Orders found successfully", HttpStatus.OK);
+    }
+
+    @GetMapping("/getFinacialReport/{scope}")
+    public ResponseEntity<Object> getFinancialReport(@PathVariable String scope) {
+        List<FinancialReportDTO> report = orderService.FinancialReport(scope);
+        return APIResponse.responseBuilder(report, "Order fetched successfully", HttpStatus.OK);
     }
 
 }
