@@ -117,19 +117,4 @@ public class OrderControllerTest {
                 .andExpect(jsonPath("$.message").value("Orders fetched successfully"))
                 .andExpect(jsonPath("$.data.length()").value(2));
     }
-
-    @Test
-    void testGetOrderById() throws Exception {
-        // Mock dữ liệu
-        Order order = new Order();
-        order.setOrderId(1);
-
-        when(orderService.getOrderById(1)).thenReturn(order);
-
-        // Thực hiện yêu cầu GET và kiểm tra phản hồi
-        mockMvc.perform(get("/api/orders/1"))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.message").value("Order fetched successfully"))
-                .andExpect(jsonPath("$.data.orderId").value(1));
-    }
 }

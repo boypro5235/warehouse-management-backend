@@ -5,8 +5,8 @@ import com.example.WebQlyKho.dto.request.CreateOrderDto;
 import com.example.WebQlyKho.dto.request.DeleteRequest;
 import com.example.WebQlyKho.dto.response.APIResponse;
 import com.example.WebQlyKho.entity.Order;
+import com.example.WebQlyKho.entity.OrderDetails;
 import com.example.WebQlyKho.service.OrderService;
-import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -52,7 +52,7 @@ public class OrderController {
     // Lấy đơn hàng theo ID
     @GetMapping("/{orderId}")
     public ResponseEntity<Object> getOrderById(@PathVariable Integer orderId) {
-        Order order = orderService.getOrderById(orderId);
+        List<OrderDetails> order = orderService.getOrderById(orderId);
         return APIResponse.responseBuilder(order, "Order fetched successfully", HttpStatus.OK);
     }
 

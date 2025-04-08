@@ -8,10 +8,6 @@ import com.example.WebQlyKho.repository.*;
 import com.example.WebQlyKho.service.impl.OrderServiceImpl;
 import com.example.WebQlyKho.utils.JwtTokenProvider;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.persistence.criteria.CriteriaBuilder;
-import jakarta.persistence.criteria.CriteriaQuery;
-import jakarta.persistence.criteria.Predicate;
-import jakarta.persistence.criteria.Root;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,16 +16,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.jpa.domain.Specification;
 
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.lang.reflect.Executable;
-import java.security.Principal;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.StreamSupport;
 
@@ -104,9 +94,9 @@ public class OrderServiceImplTest {
     @Test
     void testGetOrderById_Success() {
         when(orderRepository.findById(1)).thenReturn(Optional.of(order));
-        Order result = orderService.getOrderById(1);
+        List<OrderDetails> result = orderService.getOrderById(1);
         assertNotNull(result);
-        assertEquals(order.getOrderId(), result.getOrderId());
+        assertEquals(order.getOrderId(), result.get(1).getOrder().getOrderId());
     }
 
     @Test

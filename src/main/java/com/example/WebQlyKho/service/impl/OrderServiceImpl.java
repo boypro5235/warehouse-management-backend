@@ -237,10 +237,10 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order getOrderById(Integer orderId) {
-        return orderRepository.findById(orderId)
-                .orElseThrow(() -> new RuntimeException("Order not found!"));
+    public List<OrderDetails> getOrderById(Integer orderId) {
+        return orderDetailRepository.findByOrderId(orderId);
     }
+
 
     @Override
     public List<Order> getAllOrder() {
