@@ -6,6 +6,7 @@ import com.example.WebQlyKho.dto.request.UpdateUserRequestDto;
 import com.example.WebQlyKho.dto.response.APIResponse;
 import com.example.WebQlyKho.dto.response.LoginResponseDto;
 import com.example.WebQlyKho.service.UserService;
+import com.example.WebQlyKho.utils.JwtTokenProvider;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,18 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
+    @GetMapping("/getUsernameFromToken")
+    public ResponseEntity<Object> getUsernameFromToken(HttpServletRequest request) {
+        String username = jwtTokenProvider.getUsernameFromToken(request.getHeader("Authorization").substring(7));
+        return APIResponse.responseBuilder(
+                username,
+                "Get username from token successfully",
+                HttpStatus.OK);
+    }
 
     @GetMapping("/getAllUser")
     @PreAuthorize("hasRole('ADMIN')")

@@ -60,6 +60,7 @@ public class UserServiceIplm implements UserService {
         String token = jwtTokenProvider.generateTokenByUsername(request.getUsername(), user.getUserId());;
         return LoginResponseDto.builder()
                 .token(token)
+                .fullname(user.getFullname())
                 .role(user.getRole())
                 .userId(user.getUserId())
                 .build();
